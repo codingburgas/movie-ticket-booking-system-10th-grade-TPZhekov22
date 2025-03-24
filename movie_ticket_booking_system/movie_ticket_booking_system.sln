@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "movie_ticket_booking_system", "movie_ticket_booking_system\movie_ticket_booking_system.vcxproj", "{A277599F-2C8D-4C38-AFE8-BEDC9AB2708E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system_static_library", "system_static_library\system_static_library.vcxproj", "{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{A277599F-2C8D-4C38-AFE8-BEDC9AB2708E}.Release|x64.Build.0 = Release|x64
 		{A277599F-2C8D-4C38-AFE8-BEDC9AB2708E}.Release|x86.ActiveCfg = Release|Win32
 		{A277599F-2C8D-4C38-AFE8-BEDC9AB2708E}.Release|x86.Build.0 = Release|Win32
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Debug|x64.ActiveCfg = Debug|x64
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Debug|x64.Build.0 = Debug|x64
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Debug|x86.ActiveCfg = Debug|Win32
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Debug|x86.Build.0 = Debug|Win32
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Release|x64.ActiveCfg = Release|x64
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Release|x64.Build.0 = Release|x64
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Release|x86.ActiveCfg = Release|Win32
+		{A7FC4905-B48B-47D0-8781-DE88EEDACDEE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

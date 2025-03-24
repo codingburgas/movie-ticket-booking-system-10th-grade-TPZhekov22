@@ -1,23 +1,15 @@
 #include "manager.h"
+#include "../system_static_library/windowManager.h"
 
 int main()
 {
 
 
-	while (!Scene.currentScene == EXIT)
+	while (!WindowShouldClose)
 	{
-
-		BeginDrawing();
-
-
 		sceneManager();
-
-		
-		EndDrawing();
 	}
 
 
-	
-	CloseWindow();
 	return 0;
 }
