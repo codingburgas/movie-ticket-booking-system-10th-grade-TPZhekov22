@@ -5,8 +5,7 @@
 
 void sceneManager()
 {
-	int* mainMenuScreen = nullptr;
-	mainMenuScreen = new int;
+	int mainMenuScreen;
 	while (utility::exit == false)
 	{
 		switch (utility::scene.currentScene)
@@ -15,18 +14,16 @@ void sceneManager()
 			utility::clear();
 
 			mainMenu();
-			while (true) {
-				std::cin >> *mainMenuScreen;
-				if (*mainMenuScreen >= 1 && *mainMenuScreen <= 3) {
-					break;
-				}
-				else {
+			do{
+				std::cin >> mainMenuScreen;
+				if (mainMenuScreen < 1 && mainMenuScreen > 3) {
 					std::cout << "Invalid option" << '\n';
 					std::cin.clear();
 					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				}
-			}
-			switch (*mainMenuScreen)
+			}while (mainMenuScreen < 1 && mainMenuScreen > 3);
+
+			switch (mainMenuScreen)
 			{
 			case 1:
 				utility::scene.currentScene = utility::scene.View;
@@ -40,12 +37,11 @@ void sceneManager()
 		case utility::scene.View:
 			utility::clear();
 
-			viewMenu();
+			
 			break;
 		case utility::scene.ExitEnum:
 			utility::clear();
 
-			delete mainMenuScreen;
 			std::cout << "Exiting..." << '\n';
 			utility::exit = true;
 			break;

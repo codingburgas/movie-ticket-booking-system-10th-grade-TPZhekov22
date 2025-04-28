@@ -6,7 +6,7 @@ namespace utility
     bool exit = false;
     StructScene scene;
 
-    void clear()
+    static void clearScreen()
     {
 #if defined(_WIN32) || defined(_WIN64)
         std::system("cls");
@@ -14,4 +14,4 @@ namespace utility
         std::system("clear");
 #endif
     }
-} // namespace exitKey
+}
