@@ -135,6 +135,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="movie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\system_static_library\system_static_library.vcxproj">
@@ -142,6 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="movie.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="menus.h" />
   </ItemGroup>
