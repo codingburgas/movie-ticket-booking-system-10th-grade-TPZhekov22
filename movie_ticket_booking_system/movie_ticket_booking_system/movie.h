@@ -1,5 +1,6 @@
 #pragma once  
 #include <string>
+#include <vector>
 #include <iostream>
 
 class Movie  
@@ -20,11 +21,13 @@ const std::string& getReleaseDate() const;
 const std::string& getLanguage() const;  
 };  
 
+
+
 class Projection  
 {  
 private:  
 Movie projectionMovie;
-bool seats[10][10];  // 10x10 seating arrangement
+std::vector<std::vector<bool>> seats;  // 10x10 seating arrangement
 int startingTime; // Using a 24 hour type Za izpolzvane pokusno DELETE LATER
 
 public:  
