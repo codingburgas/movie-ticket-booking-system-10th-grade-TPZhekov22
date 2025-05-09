@@ -27,7 +27,7 @@
     <ClCompile Include="cinemasMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="movie.cpp">
+    <ClCompile Include="cinemaObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="menus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="movie.h">
+    <ClInclude Include="cinemaObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
