@@ -3,7 +3,10 @@
 #include <vector>
 #include <iostream>
 
+#define SEAT_PLAN_ROWS 10
+#define SEAT_PLAN_COLS 10
 
+// Movie class declaration
 class Movie  
 {  
 private:  
@@ -16,33 +19,58 @@ public:
 Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate, const std::string& movieLanguage); //Constructor 
 
 // Getters for movie details  
-const std::string& getTitle() const;  
-const std::string& getGenre() const;  
-const std::string& getReleaseDate() const;  
-const std::string& getLanguage() const;  
+const std::string& getTitle() const; // Get the title of the movie
+const std::string& getGenre() const; // Get the genre of the movie
+const std::string& getReleaseDate() const;  // Get the release date of the movie
+const std::string& getLanguage() const;  // Get the language of the movie
 };  
 
-
-
-class movieProjection  
+// MovieProjection class declaration
+class MovieProjection  
 {  
 private:  
-Movie projectionMovie;
-std::vector<std::vector<bool>> seats;  // 10x10 seating arrangement
-int startingTime; // Using a 24 hour type Za izpolzvane pokusno DELETE LATER
+   Movie projectionMovie;
+   std::vector<std::vector<bool>> seats;  
+   int startingTime;  
 
 public:  
-movieProjection(const Movie& movie, int startingTime); //Constructor
+   MovieProjection(const Movie& movie, int startingTime);  
 
-bool bookTicket(int row, int col); // Book a ticket
-void displaySeatPlan() const; // Display seating plan in movie prjection
+   
+   void displaySeatPlan() const; // Display the seat plan for the projection
+   int getProjectionTime() const; // Get the projection time
+   const std::string& getProjectionMovieTitle() const; // Get the title of the movie
+   const std::string& getProjectionMovieGenre() const; // Get the genre of the movie
+   const std::string& getProjectionMovieReleaseDate() const; // Get the release date of the movie
+   const std::string& getProjectionMovieLanguage() const; // Get the language of the movie
+
+   bool bookTicket(int row, int col); // Book a ticket for a specific seat
+   void setProjectionTime(int projectionStartTime); // Set the projection time
 };
 
+// Hall class declaration
 class Hall
 {
 private:
-	int ID;
-	// movieProjectionClass
+	const int ID;
+	std::vector<MovieProjection> projectionPlan;
+public:
+	Hall(int id);
 
+	void addProjection(const MovieProjection& projection); // Add a projection to the hall
+	void displayProjectionCalendar() const; // Display the hall's projection plan
+	int getHallID() const; // Get the ID of the hall
 };
 
+// Cinema class declaration
+class Cinema
+{
+private:
+	std::string name;
+	std::vector<Hall> halls;
+public:
+	Cinema(const std::string& cinemaName, int numberOfHalls); // Constructor to initialize the cinema with a name and number of halls
+	void addHall(const Hall& hall); // Add a hall to the cinema
+	void displayHalls() const; // Display all halls in the cinema
+	void displayMovies() const; // Display all movies in the cinema
+};
