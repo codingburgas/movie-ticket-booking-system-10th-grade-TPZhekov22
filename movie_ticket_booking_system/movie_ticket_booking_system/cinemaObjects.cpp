@@ -144,3 +144,19 @@ int Hall::getHallID() const
 {
 	return ID;
 }
+
+// Cinema class implementation
+Cinema::Cinema(const std::string& cinemaName) : name(cinemaName) {}
+
+void Cinema::addHall(const Hall& hall)
+{
+	halls.push_back(hall);
+}
+
+void Cinema::displayHallsID() const
+{
+	for (size_t temp = 0; temp < halls.size(); temp++)
+	{
+		std::cout << "Hall# " << halls.at(temp).getHallID() << std::endl;
+	}
+}

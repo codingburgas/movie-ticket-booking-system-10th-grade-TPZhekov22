@@ -69,8 +69,9 @@ private:
 	std::string name;
 	std::vector<Hall> halls;
 public:
-	Cinema(const std::string& cinemaName, int numberOfHalls); // Constructor to initialize the cinema with a name and number of halls
+	Cinema(const std::string& cinemaName); // Constructor to initialize the cinema with a name and number of halls
+
 	void addHall(const Hall& hall); // Add a hall to the cinema
-	void displayHalls() const; // Display all halls in the cinema
+	void displayHallsID() const; // Display all halls in the cinema
 	void displayMovies() const; // Display all movies in the cinema
 };
