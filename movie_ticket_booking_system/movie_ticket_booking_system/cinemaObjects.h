@@ -57,7 +57,7 @@ private:
 public:
 	Hall(int id);
 
-	void addProjection(const MovieProjection& projection); // Add a projection to the hall
+	void addProjection(const Movie& movie); // Add a projection to the hall
 	void displayProjectionCalendar() const; // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
 };

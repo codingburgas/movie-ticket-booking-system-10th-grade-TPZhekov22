@@ -126,9 +126,21 @@ const std::string& MovieProjection::getProjectionMovieLanguage() const
 // Hall class implementation
 Hall::Hall(const int id) : ID(id) {}
 
-void Hall::addProjection(const MovieProjection& projection)
+void Hall::addProjection(const Movie& movie)
 {
-	projectionPlan.push_back(projection);
+if (projectionPlan.size() >= 15) 
+{
+	std::cout << "Cannot add more projections. Maximum limit reached(15)." << '\n';
+	return;
+}
+else
+{
+	int tempTime;
+	std::cout << "Enter the starting time of the projection (0-23): " << '\n';
+	std::cin >> tempTime;	
+	MovieProjection tempProjection(movie, tempTime);
+	projectionPlan.push_back(std::move(tempProjection));
+}
 }
 
 void Hall::displayProjectionCalendar() const
@@ -137,6 +149,10 @@ void Hall::displayProjectionCalendar() const
 	for (size_t temp = 0; temp < projectionPlan.size(); temp++) 
 	{
 		std::cout << temp << "# Movie projection: " << projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
+		std::cout << "Genre: " << projectionPlan.at(temp).getProjectionMovieGenre() << '\n';
+		std::cout << "Release Date: " << projectionPlan.at(temp).getProjectionMovieReleaseDate() << '\n';
+		std::cout << "Language: " << projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';
+		std::cout << "Projection Time: " << projectionPlan.at(temp).getProjectionTime() << ":00" << '\n';
 	}
 }
 
@@ -155,8 +171,17 @@ void Cinema::addHall(const Hall& hall)
 
 void Cinema::displayHallsID() const
 {
-	for (size_t temp = 0; temp < halls.size(); temp++)
+	for (const auto& hall : halls)
 	{
-		std::cout << "Hall# " << halls.at(temp).getHallID() << std::endl;
+		std::cout << "Hall# " << hall.getHallID() << '\n';
+	}
+}
+
+void Cinema::displayMovies() const
+{
+	for (const auto& hall : halls)
+	{
+		std::cout << "Hall ID: " << hall.getHallID() << '\n';
+		hall.displayProjectionCalendar();
 	}
 }
