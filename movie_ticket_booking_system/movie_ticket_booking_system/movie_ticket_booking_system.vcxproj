@@ -132,6 +132,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cinemasMenu.cpp" />
+    <ClCompile Include="cityMenu.cpp" />
+    <ClCompile Include="loadResources.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="manager.cpp" />

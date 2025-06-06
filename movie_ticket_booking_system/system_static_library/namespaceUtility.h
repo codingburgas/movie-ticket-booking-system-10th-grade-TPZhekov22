@@ -6,7 +6,7 @@ namespace utility
 {
 	struct StructScene
 		{
-			enum EnumScene : std::uint8_t { Menu, Cinemas, ExitEnum };
+			enum EnumScene : std::uint8_t { Menu, Cities ,Cinemas, ExitEnum };
 
 			EnumScene currentScene = Menu;
 		};

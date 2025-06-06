@@ -13,13 +13,16 @@ void sceneManager()
 		case utility::scene.Menu:
 			utility::clearScreen();
 			mainMenu();
-
 			break;
+
+		case utility::scene.Cities:
+			utility::clearScreen();
+			break;
+
 		case utility::scene.Cinemas:
 			utility::clearScreen();
-
-
 			break;
+
 		case utility::scene.ExitEnum:
 			utility::clearScreen();
 
