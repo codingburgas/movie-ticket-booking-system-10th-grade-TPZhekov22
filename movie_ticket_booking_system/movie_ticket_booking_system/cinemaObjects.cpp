@@ -164,6 +164,11 @@ int Hall::getHallID() const
 // Cinema class implementation
 Cinema::Cinema(const std::string& cinemaName) : name(cinemaName) {}
 
+const std::string& Cinema::getCinemaName() const
+{
+	return name;
+}
+
 void Cinema::addHall(const Hall& hall)
 {
 	halls.push_back(hall);
@@ -183,5 +188,26 @@ void Cinema::displayMovies() const
 	{
 		std::cout << "Hall ID: " << hall.getHallID() << '\n';
 		hall.displayProjectionCalendar();
+	}
+}
+
+// City class implementation
+City::City(const std::string& cityName) : name(cityName) {}
+
+const std::string& City::getCityName() const
+{
+	return name;
+}
+
+void City::addCinema(const Cinema& cinema)
+{
+	cinemas.push_back(cinema);
+}
+
+void City::displayCinemas() const
+{
+	for (const auto& cinema : cinemas)
+	{
+		std::cout << "Cinema: " << cinema.getCinemaName() << '\n';
 	}
 }

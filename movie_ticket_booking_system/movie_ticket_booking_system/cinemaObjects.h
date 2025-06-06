@@ -31,7 +31,7 @@ class MovieProjection
 private:  
    Movie projectionMovie;
    std::vector<std::vector<bool>> seats;  
-   int startingTime;  
+   int startingTime;
 
 public:  
    MovieProjection(const Movie& movie, int startingTime);  
@@ -72,6 +72,20 @@ public:
 	Cinema(const std::string& cinemaName); // Constructor to initialize the cinema with a name and number of halls
 
 	void addHall(const Hall& hall); // Add a hall to the cinema
+	const std::string& getCinemaName() const; // Get the name of the cinema
 	void displayHallsID() const; // Display all halls in the cinema
 	void displayMovies() const; // Display all movies in the cinema
+};
+
+//City class declaration
+class City
+{
+	private:
+		std::string name;
+		std::vector<Cinema> cinemas;
+	public:
+		City(const std::string& cityName); // Constructor to initialize the city with a name
+		const std::string& getCityName() const; // Get the name of the city
+		void addCinema(const Cinema& cinema); // Add a cinema to the city
+		void displayCinemas() const; // Display all cinemas in the city
 };
