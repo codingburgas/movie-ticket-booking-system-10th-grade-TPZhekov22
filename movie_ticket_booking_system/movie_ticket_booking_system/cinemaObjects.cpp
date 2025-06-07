@@ -1,5 +1,5 @@
 #include "cinemaObjects.h"
-
+#include "../system_static_library/namespaceUtility.h"
 
 // Movie class implementation
 Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate, const std::string& movieLanguage)
@@ -24,6 +24,22 @@ const std::string& Movie::getReleaseDate() const
 const std::string& Movie::getLanguage() const
 {
 	return language;
+}
+
+bool Movie::saveToFile(std::ostream& os) const {
+	return utility::writeString(os, title)
+		&& utility::writeString(os, genre)
+		&& utility::writeString(os, releaseDate)
+		&& utility::writeString(os, language);
+}
+
+std::optional<Movie> Movie::loadFromFile(std::istream& is) {
+	std::string title, genre, releaseDate, language;
+	if (!utility::readString(is, title)) return std::nullopt;
+	if (!utility::readString(is, genre)) return std::nullopt;
+	if (!utility::readString(is, releaseDate)) return std::nullopt;
+	if (!utility::readString(is, language)) return std::nullopt;
+	return Movie(title, genre, releaseDate, language);
 }
 
 // MovieProjection class implementation
@@ -123,8 +139,67 @@ const std::string& MovieProjection::getProjectionMovieLanguage() const
 	return projectionMovie.getLanguage();
 }
 
+bool MovieProjection::saveToFile(std::ostream& os) const {
+	// Save the Movie
+	if (!projectionMovie.saveToFile(os)) return false;
+
+	// Save the starting time
+	os.write(reinterpret_cast<const char*>(&startingTime), sizeof(startingTime));
+	if (!os) return false;
+
+	// Save the seats vector
+	size_t numRows = seats.size();
+	os.write(reinterpret_cast<const char*>(&numRows), sizeof(numRows));
+	if (!os) return false;
+	for (const auto& row : seats) {
+		size_t numCols = row.size();
+		os.write(reinterpret_cast<const char*>(&numCols), sizeof(numCols));
+		if (!os) return false;
+		for (bool seat : row) {
+			os.write(reinterpret_cast<const char*>(&seat), sizeof(seat));
+			if (!os) return false;
+		}
+	}
+	return true;
+}
+
+std::optional<MovieProjection> MovieProjection::loadFromFile(std::istream& is) {
+
+	// Load the Movie
+	auto movieOpt = Movie::loadFromFile(is);
+	if (!movieOpt) return std::nullopt;
+
+	// Load the starting time
+	int startingTime;
+	is.read(reinterpret_cast<char*>(&startingTime), sizeof(startingTime));
+	if (!is) return std::nullopt;
+
+	// Load the seats vector
+	size_t numRows;
+	is.read(reinterpret_cast<char*>(&numRows), sizeof(numRows));
+	if (!is) return std::nullopt;
+	std::vector<std::vector<bool>> seats(numRows);
+	for (size_t i = 0; i < numRows; ++i) {
+		size_t numCols;
+		is.read(reinterpret_cast<char*>(&numCols), sizeof(numCols));
+		if (!is) return std::nullopt;
+		seats[i].resize(numCols);
+		for (size_t j = 0; j < numCols; ++j) {
+			bool temp;
+			is.read(reinterpret_cast<char*>(&temp), sizeof(bool));
+			seats[i][j] = temp;
+			if (!is) return std::nullopt;
+		}
+	}
+
+	//Return the MovieProjection object
+	MovieProjection proj(*movieOpt, startingTime);
+	proj.seats = std::move(seats);
+	return proj;
+}
+
 // Hall class implementation
-Hall::Hall(const int id) : ID(id) {}
+Hall::Hall(int id) : ID(id) {}
 
 void Hall::addProjection(const Movie& movie)
 {
@@ -161,6 +236,47 @@ int Hall::getHallID() const
 	return ID;
 }
 
+bool Hall::saveToFile(std::ostream& os) const {
+	// Save the ID
+	os.write(reinterpret_cast<const char*>(&ID), sizeof(ID));
+	if (!os) return false;
+
+	// Save the projectionPlan vector
+	size_t numProjections = projectionPlan.size();
+	os.write(reinterpret_cast<const char*>(&numProjections), sizeof(numProjections));
+	if (!os) return false;
+	for (const auto& proj : projectionPlan) {
+		if (!proj.saveToFile(os)) return false;
+	}
+	return true;
+}
+
+std::optional<Hall> Hall::loadFromFile(std::istream& is) {
+	// Load the ID
+	int id;
+	is.read(reinterpret_cast<char*>(&id), sizeof(id));
+	if (!is) return std::nullopt;
+
+	// Load the projectionPlan vector
+	size_t numProjections;
+	is.read(reinterpret_cast<char*>(&numProjections), sizeof(numProjections));
+	if (!is) return std::nullopt;
+
+	// Check if the number of movieProjections is within the limit
+	std::vector<MovieProjection> projectionPlan;
+	projectionPlan.reserve(numProjections);
+	for (size_t i = 0; i < numProjections; ++i) {
+		auto projOpt = MovieProjection::loadFromFile(is);
+		if (!projOpt) return std::nullopt;
+		projectionPlan.push_back(std::move(*projOpt));
+	}
+
+	// Return the Hall object
+	Hall hall(id);
+	hall.projectionPlan = std::move(projectionPlan);
+	return hall;
+}
+
 // Cinema class implementation
 Cinema::Cinema(const std::string& cinemaName) : name(cinemaName) {}
 
@@ -191,6 +307,44 @@ void Cinema::displayMovies() const
 	}
 }
 
+bool Cinema::saveToFile(std::ostream& os) const {
+	// Save the name
+	if (!utility::writeString(os, name)) return false;
+
+	// Save the halls vector
+	size_t numHalls = halls.size();
+	os.write(reinterpret_cast<const char*>(&numHalls), sizeof(numHalls));
+	if (!os) return false;
+	for (const auto& hall : halls) {
+		if (!hall.saveToFile(os)) return false;
+	}
+	return true;
+}
+
+std::optional<Cinema> Cinema::loadFromFile(std::istream& is) {
+	// Load the name
+	std::string name;
+	if (!utility::readString(is, name)) return std::nullopt;
+
+	// Load the halls vector
+	size_t numHalls;
+	is.read(reinterpret_cast<char*>(&numHalls), sizeof(numHalls));
+	if (!is) return std::nullopt;
+
+	std::vector<Hall> halls;
+	halls.reserve(numHalls);
+	for (size_t i = 0; i < numHalls; ++i) {
+		auto hallOpt = Hall::loadFromFile(is);
+		if (!hallOpt) return std::nullopt;
+		halls.push_back(std::move(*hallOpt));
+	}
+
+	// Return the Cinema object
+	Cinema cinema(name);
+	cinema.halls = std::move(halls);
+	return cinema;
+}
+
 // City class implementation
 City::City(const std::string& cityName) : name(cityName) {}
 
@@ -210,4 +364,41 @@ void City::displayCinemas() const
 	{
 		std::cout << "Cinema: " << cinema.getCinemaName() << '\n';
 	}
+}
+
+bool City::saveToFile(std::ostream& os) const {
+	// Save the city name
+	if (!utility::writeString(os, name)) return false;
+
+	// Save the cinemas vector
+	size_t numCinemas = cinemas.size();
+	os.write(reinterpret_cast<const char*>(&numCinemas), sizeof(numCinemas));
+	if (!os) return false;
+	for (const auto& cinema : cinemas) {
+		if (!cinema.saveToFile(os)) return false;
+	}
+	return true;
+}
+
+std::optional<City> City::loadFromFile(std::istream& is) {
+	// Load the city name
+	std::string name;
+	if (!utility::readString(is, name)) return std::nullopt;
+
+	// Load the cinemas vector
+	size_t numCinemas;
+	is.read(reinterpret_cast<char*>(&numCinemas), sizeof(numCinemas));
+	if (!is) return std::nullopt;
+
+	std::vector<Cinema> cinemas;
+	cinemas.reserve(numCinemas);
+	for (size_t i = 0; i < numCinemas; ++i) {
+		auto cinemaOpt = Cinema::loadFromFile(is);
+		if (!cinemaOpt) return std::nullopt;
+		cinemas.push_back(std::move(*cinemaOpt));
+	}
+
+	City city(name);
+	city.cinemas = std::move(cinemas);
+	return city;
 }

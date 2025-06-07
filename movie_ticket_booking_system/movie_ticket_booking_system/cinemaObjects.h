@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <optional>
 
 #define SEAT_PLAN_ROWS 10
 #define SEAT_PLAN_COLS 10
@@ -23,6 +24,10 @@ const std::string& getTitle() const; // Get the title of the movie
 const std::string& getGenre() const; // Get the genre of the movie
 const std::string& getReleaseDate() const;  // Get the release date of the movie
 const std::string& getLanguage() const;  // Get the language of the movie
+
+// Serialization methods for saving and loading Movie objects
+bool saveToFile(std::ostream& os) const;
+static std::optional<Movie> loadFromFile(std::istream& is);
 };  
 
 // MovieProjection class declaration
@@ -46,13 +51,17 @@ public:
 
    bool bookTicket(int row, int col); // Book a ticket for a specific seat
    void setProjectionTime(int projectionStartTime); // Set the projection time
+
+   // Serialization methods for saving and loading MovieProjection objects
+   bool saveToFile(std::ostream& os) const;
+   static std::optional<MovieProjection> loadFromFile(std::istream& is);
 };
 
 // Hall class declaration
 class Hall
 {
 private:
-	const int ID;
+	int ID;
 	std::vector<MovieProjection> projectionPlan;
 public:
 	Hall(int id);
@@ -60,6 +69,10 @@ public:
 	void addProjection(const Movie& movie); // Add a projection to the hall
 	void displayProjectionCalendar() const; // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
+
+	// Serialization methods for saving and loading Hall objects
+	bool saveToFile(std::ostream& os) const;
+	static std::optional<Hall> loadFromFile(std::istream& is);
 };
 
 // Cinema class declaration
@@ -75,6 +88,10 @@ public:
 	const std::string& getCinemaName() const; // Get the name of the cinema
 	void displayHallsID() const; // Display all halls in the cinema
 	void displayMovies() const; // Display all movies in the cinema
+
+	// Serialization methods for saving and loading Cinema objects
+	bool saveToFile(std::ostream& os) const;
+	static std::optional<Cinema> loadFromFile(std::istream& is);
 };
 
 //City class declaration
@@ -88,4 +105,8 @@ class City
 		const std::string& getCityName() const; // Get the name of the city
 		void addCinema(const Cinema& cinema); // Add a cinema to the city
 		void displayCinemas() const; // Display all cinemas in the city
+
+		// Serialization methods for saving and loading City objects
+		bool saveToFile(std::ostream& os) const;
+		static std::optional<City> loadFromFile(std::istream& is);
 };

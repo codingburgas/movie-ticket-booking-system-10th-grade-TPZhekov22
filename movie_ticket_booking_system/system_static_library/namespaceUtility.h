@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <iostream>
 
 namespace utility
 {
@@ -16,4 +17,8 @@ namespace utility
 	void displayTitleGraphic(const std::string& file_link);
 
 	extern bool exit;
+
+	// String serialization
+	inline bool writeString(std::ostream& os, const std::string& str);
+	inline bool readString(std::istream& is, std::string& str);
 }
