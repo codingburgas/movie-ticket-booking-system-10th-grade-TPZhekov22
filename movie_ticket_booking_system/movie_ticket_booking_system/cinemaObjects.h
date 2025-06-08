@@ -1,7 +1,7 @@
 #pragma once
+#include <chrono>
 #include <string>
 #include <vector>
-#include <iostream>
 #include <optional>
 
 #define SEAT_PLAN_ROWS 10
@@ -12,18 +12,17 @@ class Movie
 {
 	std::string m_title;
 	std::string m_genre;
-	std::string m_releaseDate;
+	std::chrono::year_month_day m_releaseDate;
 	std::string m_language;
 
 public:
-	Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate,
+	Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
 	      const std::string& movieLanguage); //Constructor 
 
-	// Getters for movie details  
-	const std::string& getTitle() const; // Get the title of the movie
-	const std::string& getGenre() const; // Get the genre of the movie
-	const std::string& getReleaseDate() const; // Get the release date of the movie
-	const std::string& getLanguage() const; // Get the language of the movie
+	const std::string& getTitle() const;
+	const std::string& getGenre() const;
+	std::chrono::year_month_day getReleaseDate() const;
+	const std::string& getLanguage() const;
 
 	// Serialization methods for saving and loading movie objects
 	bool saveToFile(std::ostream& os) const;
@@ -45,7 +44,7 @@ public:
 	int getProjectionTime() const; // Get the projection time
 	const std::string& getProjectionMovieTitle() const; // Get the title of the movie
 	const std::string& getProjectionMovieGenre() const; // Get the genre of the movie
-	const std::string& getProjectionMovieReleaseDate() const; // Get the release date of the movie
+	std::chrono::year_month_day getProjectionMovieReleaseDate() const; // Get the release date of the movie
 	const std::string& getProjectionMovieLanguage() const; // Get the language of the movie
 
 	bool bookTicket(int row, int col); // Book a ticket for a specific seat

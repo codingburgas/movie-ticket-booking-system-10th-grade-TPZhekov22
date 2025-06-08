@@ -1,6 +1,7 @@
 #include <fstream>
 #include "cinemaObjects.h"
 #include "loadObjectData.h"
+#include <iostream>
 
 // Cities vector loading function
 std::vector<City> loadCitiesFromFile()

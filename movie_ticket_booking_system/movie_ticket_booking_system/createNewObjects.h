@@ -2,5 +2,9 @@
 #include <vector>
 #include "cinemaObjects.h"
 
-void createNewCity();
+//Cities vector create and save functions
+//void createNewCity();
 void saveCitiesToFile(const std::vector<City>& cities);
+
+//Movie creation function
+void createNewMovie();

@@ -4,8 +4,8 @@
 
 int main()
 {
-
-	sceneManager();
+	createNewMovie();
+	//sceneManager();
 
 	return 0;
 }

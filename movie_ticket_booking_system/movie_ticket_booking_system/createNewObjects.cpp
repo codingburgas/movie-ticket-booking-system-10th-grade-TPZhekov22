@@ -1,6 +1,8 @@
 #include "createNewObjects.h"
 #include "cinemaObjects.h"
+#include "../system_static_library/namespaceUtility.h"
 #include <fstream>
+#include <iostream>
 
 //Cities vector create and save functions
 /*
@@ -36,6 +38,7 @@ void createNewCity()
 	}
     saveCitiesToFile(cities);
 }
+*/
 
 void saveCitiesToFile(const std::vector<City>& cities)
 {
@@ -68,5 +71,70 @@ void saveCitiesToFile(const std::vector<City>& cities)
     outFile.close();
     std::cout << "Cities saved successfully to " << fullPath << '\n';
 }
-*/
 
+//Movie creation and save function
+void createNewMovie()
+{
+	std::string movieTitle;
+	std::string movieGenre;
+	std::string movieLanguage;
+
+	std::cout << "Enter the name of the movie: ";
+	std::getline(std::cin, movieTitle);
+
+	std::cout << "Enter the genre of the movie: ";
+	std::getline(std::cin, movieGenre);
+
+	std::cout << "Enter the language of the movie: ";
+	std::getline(std::cin, movieLanguage);
+
+    int year, month, day;
+    do {
+        std::cout << "Enter release date (YYYY MM DD): ";
+        std::cin >> year >> month >> day;
+        if (!utility::isValidDate(year, month, day)) {
+            std::cout << "Invalid date. Please try again.\n";
+        }
+    } while (!utility::isValidDate(year, month, day));
+    std::chrono::year_month_day movieReleaseDate{
+        std::chrono::year{year},
+        std::chrono::month{static_cast<unsigned int>(month)},
+        std::chrono::day{static_cast<unsigned int>(day)}
+    };
+
+	
+
+	Movie newMovie(movieTitle, movieGenre, movieReleaseDate, movieLanguage);
+
+    std::cout << "New Movie Created: \n";
+    std::cout << "Title: " << newMovie.getTitle() << "\n";
+    std::cout << "Genre: " << newMovie.getGenre() << "\n";
+    std::cout << "Release Date: " << newMovie.getReleaseDate() << "\n";
+	std::cout << "Language: " << newMovie.getLanguage() << "\n";
+
+	std::cout << "Confirm creation of the movie? (y/n): ";
+	char confirm;
+	std::cin >> confirm;
+	if (confirm == 'y' || confirm == 'Y')
+	{
+		std::ofstream outFile("../assets/objectData/movieObjects/" + newMovie.getTitle() + ".bin", std::ios::binary | std::ios::app);
+		if (!outFile)
+		{
+			std::cerr << "Error: Unable to open file for writing.\n";
+			return;
+		}
+		if (!newMovie.saveToFile(outFile))
+		{
+			std::cerr << "Error: Failed to save movie to file.\n";
+			outFile.close();
+			return;
+		}
+		outFile.close();
+		std::cout << "Movie saved successfully!\n";
+	}
+	else
+	{
+		std::cout << "Movie creation cancelled.\n";
+        return;
+	}
+}

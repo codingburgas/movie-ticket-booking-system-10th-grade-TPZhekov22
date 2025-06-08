@@ -1,7 +1,4 @@
 #include "namespaceUtility.h"
-#include <iostream>
-#include <string>
-#include <fstream>
 
 namespace utility
 {
@@ -33,6 +30,36 @@ namespace utility
 			std::cerr << "Unable to open file" << '\n';
 		}
     }
+
+	void displayDate(std::chrono::year_month_day dateYearMonthDay)
+    {
+	    std::chrono::year_month_day ymd = dateYearMonthDay;
+	std::cout << static_cast<int>(ymd.year()) << '-'
+		<< static_cast<unsigned>(ymd.month()) << '-'
+		<< static_cast<unsigned>(ymd.day()) << '\n';
+    }
+
+	bool isLeapYear(int year) {
+		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+	}
+
+	bool isValidDate(int year, int month, int day) {
+		if (month < 1 || month > 12) return false;
+		if (day < 1) return false;
+
+		switch (month) {
+		case 2:
+			if (isLeapYear(year))
+				return day <= 29;
+			else
+				return day <= 28;
+		case 4: case 6: case 9: case 11:
+			return day <= 30;
+		default:
+			return day <= 31;
+		}
+	}
+	
 }
 
 // Example usage of serialization and deserialization of MOVIE objects. DELETE LATER

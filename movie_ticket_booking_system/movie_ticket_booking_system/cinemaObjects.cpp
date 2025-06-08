@@ -1,8 +1,9 @@
+#include <chrono>
 #include "cinemaObjects.h"
 #include "../system_static_library/namespaceUtility.h"
 
 // Movie class implementation
-Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate,
+Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
              const std::string& movieLanguage)
 	: m_title(movieTitle), m_genre(movieGenre), m_releaseDate(movieDate), m_language(movieLanguage)
 {
@@ -18,7 +19,7 @@ const std::string& Movie::getTitle() const
 	return m_title;
 }
 
-const std::string& Movie::getReleaseDate() const
+std::chrono::year_month_day Movie::getReleaseDate() const 
 {
 	return m_releaseDate;
 }
@@ -28,27 +29,40 @@ const std::string& Movie::getLanguage() const
 	return m_language;
 }
 
-bool Movie::saveToFile(std::ostream& os) const
-{
+bool Movie::saveToFile(std::ostream& os) const {
+	int year = static_cast<int>(m_releaseDate.year());
+	unsigned month = static_cast<unsigned>(m_releaseDate.month());
+	unsigned day = static_cast<unsigned>(m_releaseDate.day());
 	return utility::writeString(os, m_title)
 		&& utility::writeString(os, m_genre)
-		&& utility::writeString(os, m_releaseDate)
+		&& os.write(reinterpret_cast<const char*>(&year), sizeof(year))
+		&& os.write(reinterpret_cast<const char*>(&month), sizeof(month))
+		&& os.write(reinterpret_cast<const char*>(&day), sizeof(day))
 		&& utility::writeString(os, m_language);
 }
 
-std::optional<Movie> Movie::loadFromFile(std::istream& is)
-{
-	std::string title, genre, releaseDate, language;
+std::optional<Movie> Movie::loadFromFile(std::istream& is) {
+	std::string title, genre, language;
+	int year;
+	unsigned month, day;
 	if (!utility::readString(is, title)) return std::nullopt;
 	if (!utility::readString(is, genre)) return std::nullopt;
-	if (!utility::readString(is, releaseDate)) return std::nullopt;
+	is.read(reinterpret_cast<char*>(&year), sizeof(year));
+	is.read(reinterpret_cast<char*>(&month), sizeof(month));
+	is.read(reinterpret_cast<char*>(&day), sizeof(day));
 	if (!utility::readString(is, language)) return std::nullopt;
+	if (!is) return std::nullopt;
+	std::chrono::year_month_day releaseDate{
+		std::chrono::year{year},
+		std::chrono::month{month},
+		std::chrono::day{day}
+	};
 	return Movie(title, genre, releaseDate, language);
 }
 
 // MovieProjection class implementation
-MovieProjection::MovieProjection(const Movie& movie, int startingTime) : m_projectionMovie(movie),
-                                                                         m_startingTime(startingTime)
+MovieProjection::MovieProjection(const Movie& movie, int startingTime):
+m_projectionMovie(movie), m_startingTime(startingTime)
 {
 	int tempTime = startingTime;
 	while (tempTime < 0 || tempTime > 23)
@@ -134,7 +148,7 @@ const std::string& MovieProjection::getProjectionMovieGenre() const
 	return m_projectionMovie.getGenre();
 }
 
-const std::string& MovieProjection::getProjectionMovieReleaseDate() const
+std::chrono::year_month_day MovieProjection::getProjectionMovieReleaseDate() const
 {
 	return m_projectionMovie.getReleaseDate();
 }

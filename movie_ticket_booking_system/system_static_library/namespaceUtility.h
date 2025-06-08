@@ -1,7 +1,9 @@
 #pragma once
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 namespace utility
 {
@@ -15,6 +17,9 @@ namespace utility
 	extern StructScene scene;
 	void clearScreen();
 	void displayTitleGraphic(const std::string& file_link);
+	void displayDate(std::chrono::year_month_day dateYearMonthDay);
+	bool isLeapYear(int year);
+	bool isValidDate(int year, int month, int day);
 
 	extern bool exit;
 
