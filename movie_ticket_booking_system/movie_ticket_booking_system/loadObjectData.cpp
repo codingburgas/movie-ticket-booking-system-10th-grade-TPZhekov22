@@ -2,6 +2,7 @@
 #include "cinemaObjects.h"
 #include "loadObjectData.h"
 
+// Cities vector loading function
 std::vector<City> loadCitiesFromFile()
 {
     std::vector<City> cities;

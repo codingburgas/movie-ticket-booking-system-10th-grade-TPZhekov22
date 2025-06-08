@@ -4,13 +4,8 @@
 
 int main()
 {
-	//sceneManager();
-	std::vector<City> cities = loadCitiesFromFile();
-	for (const auto& city : cities)
-	{
-		std::cout << "City: " << city.getCityName() << '\n';
-		city.displayCinemas();
-	}
+
+	sceneManager();
 
 	return 0;
 }

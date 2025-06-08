@@ -2,6 +2,8 @@
 #include "cinemaObjects.h"
 #include <fstream>
 
+//Cities vector create and save functions
+/*
 void createNewCity()
 {
 	std::string newCityName;
@@ -66,3 +68,5 @@ void saveCitiesToFile(const std::vector<City>& cities)
     outFile.close();
     std::cout << "Cities saved successfully to " << fullPath << '\n';
 }
+*/
+
