@@ -1,23 +1,24 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
 void mainMenu()
 {
-	utility::displayTitleGraphic("../assets/mainMenuTitleGraphic.txt");
+	utility::displayTitleGraphic("../assets/titleGraphics/mainMenuTitleGraphic.txt");
 
 	std::cout << "1: Select a city" << '\n';
 	std::cout << "2: Exit" << '\n';
 	int mainMenuScreen;
 	do {
 		std::cin >> mainMenuScreen;
-		if (mainMenuScreen < 1 || mainMenuScreen > 2) {
+		if (mainMenuScreen < MIN_MENU_CHOICES || mainMenuScreen > MAIN_MENU_MAX_CHOICES) {
 			std::cout << "Invalid option" << '\n';
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	} while (mainMenuScreen < 1 || mainMenuScreen > 2);
+	} while (mainMenuScreen < MIN_MENU_CHOICES || mainMenuScreen > MAIN_MENU_MAX_CHOICES);
 
 	switch (mainMenuScreen)
 	{

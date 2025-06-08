@@ -131,9 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cinemasMenu.cpp" />
     <ClCompile Include="cityMenu.cpp" />
-    <ClCompile Include="loadResources.cpp" />
+    <ClCompile Include="createNewObjects.cpp" />
+    <ClCompile Include="loadObjectData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -146,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cinemaObjects.h" />
+    <ClInclude Include="createNewObjects.h" />
+    <ClInclude Include="definitions.h" />
+    <ClInclude Include="loadObjectData.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="menus.h" />
   </ItemGroup>

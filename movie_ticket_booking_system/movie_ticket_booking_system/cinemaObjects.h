@@ -1,4 +1,4 @@
-#pragma once  
+#pragma once
 #include <string>
 #include <vector>
 #include <iostream>
@@ -8,61 +8,59 @@
 #define SEAT_PLAN_COLS 10
 
 // Movie class declaration
-class Movie  
-{  
-private:  
-const std::string title;  
-const std::string genre;  
-const std::string releaseDate;  
-const std::string language;  
+class Movie
+{
+	std::string m_title;
+	std::string m_genre;
+	std::string m_releaseDate;
+	std::string m_language;
 
-public:  
-Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate, const std::string& movieLanguage); //Constructor 
+public:
+	Movie(const std::string& movieTitle, const std::string& movieGenre, const std::string& movieDate,
+	      const std::string& movieLanguage); //Constructor 
 
-// Getters for movie details  
-const std::string& getTitle() const; // Get the title of the movie
-const std::string& getGenre() const; // Get the genre of the movie
-const std::string& getReleaseDate() const;  // Get the release date of the movie
-const std::string& getLanguage() const;  // Get the language of the movie
+	// Getters for movie details  
+	const std::string& getTitle() const; // Get the title of the movie
+	const std::string& getGenre() const; // Get the genre of the movie
+	const std::string& getReleaseDate() const; // Get the release date of the movie
+	const std::string& getLanguage() const; // Get the language of the movie
 
-// Serialization methods for saving and loading Movie objects
-bool saveToFile(std::ostream& os) const;
-static std::optional<Movie> loadFromFile(std::istream& is);
-};  
+	// Serialization methods for saving and loading movie objects
+	bool saveToFile(std::ostream& os) const;
+	static std::optional<Movie> loadFromFile(std::istream& is);
+};
 
 // MovieProjection class declaration
-class MovieProjection  
-{  
-private:  
-   Movie projectionMovie;
-   std::vector<std::vector<bool>> seats;  
-   int startingTime;
+class MovieProjection
+{
+	Movie m_projectionMovie;
+	std::vector<std::vector<bool>> m_seats;
+	int m_startingTime;
 
-public:  
-   MovieProjection(const Movie& movie, int startingTime);  
+public:
+	MovieProjection(const Movie& movie, int startingTime);
 
-   
-   void displaySeatPlan() const; // Display the seat plan for the projection
-   int getProjectionTime() const; // Get the projection time
-   const std::string& getProjectionMovieTitle() const; // Get the title of the movie
-   const std::string& getProjectionMovieGenre() const; // Get the genre of the movie
-   const std::string& getProjectionMovieReleaseDate() const; // Get the release date of the movie
-   const std::string& getProjectionMovieLanguage() const; // Get the language of the movie
 
-   bool bookTicket(int row, int col); // Book a ticket for a specific seat
-   void setProjectionTime(int projectionStartTime); // Set the projection time
+	void displaySeatPlan() const; // Display the seat plan for the projection
+	int getProjectionTime() const; // Get the projection time
+	const std::string& getProjectionMovieTitle() const; // Get the title of the movie
+	const std::string& getProjectionMovieGenre() const; // Get the genre of the movie
+	const std::string& getProjectionMovieReleaseDate() const; // Get the release date of the movie
+	const std::string& getProjectionMovieLanguage() const; // Get the language of the movie
 
-   // Serialization methods for saving and loading MovieProjection objects
-   bool saveToFile(std::ostream& os) const;
-   static std::optional<MovieProjection> loadFromFile(std::istream& is);
+	bool bookTicket(int row, int col); // Book a ticket for a specific seat
+	void setProjectionTime(int projectionStartTime); // Set the projection time
+
+	bool saveToFile(std::ostream& os) const;
+	static std::optional<MovieProjection> loadFromFile(std::istream& is);
 };
 
 // Hall class declaration
 class Hall
 {
-private:
-	int ID;
-	std::vector<MovieProjection> projectionPlan;
+	int m_ID;
+	std::vector<MovieProjection> m_projectionPlan;
+
 public:
 	Hall(int id);
 
@@ -70,7 +68,6 @@ public:
 	void displayProjectionCalendar() const; // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
 
-	// Serialization methods for saving and loading Hall objects
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<Hall> loadFromFile(std::istream& is);
 };
@@ -78,9 +75,9 @@ public:
 // Cinema class declaration
 class Cinema
 {
-private:
-	std::string name;
-	std::vector<Hall> halls;
+	std::string m_name;
+	std::vector<Hall> m_halls;
+
 public:
 	Cinema(const std::string& cinemaName); // Constructor to initialize the cinema with a name and number of halls
 
@@ -89,7 +86,6 @@ public:
 	void displayHallsID() const; // Display all halls in the cinema
 	void displayMovies() const; // Display all movies in the cinema
 
-	// Serialization methods for saving and loading Cinema objects
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<Cinema> loadFromFile(std::istream& is);
 };
@@ -97,16 +93,15 @@ public:
 //City class declaration
 class City
 {
-	private:
-		std::string name;
-		std::vector<Cinema> cinemas;
-	public:
-		City(const std::string& cityName); // Constructor to initialize the city with a name
-		const std::string& getCityName() const; // Get the name of the city
-		void addCinema(const Cinema& cinema); // Add a cinema to the city
-		void displayCinemas() const; // Display all cinemas in the city
+	std::string m_name;
+	std::vector<Cinema> m_cinemas;
 
-		// Serialization methods for saving and loading City objects
-		bool saveToFile(std::ostream& os) const;
-		static std::optional<City> loadFromFile(std::istream& is);
+public:
+	City(const std::string& cityName); // Constructor to initialize the city with a name
+	const std::string& getCityName() const; // Get the name of the city
+	void addCinema(const Cinema& cinema); // Add a cinema to the city
+	void displayCinemas() const; // Display all cinemas in the city
+
+	bool saveToFile(std::ostream& os) const;
+	static std::optional<City> loadFromFile(std::istream& is);
 };
