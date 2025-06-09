@@ -5,7 +5,7 @@
 #include <iostream>
 
 //Cities vector create and save functions
-/*
+
 void createNewCity()
 {
 	std::string newCityName;
@@ -38,7 +38,6 @@ void createNewCity()
 	}
     saveCitiesToFile(cities);
 }
-*/
 
 void saveCitiesToFile(const std::vector<City>& cities)
 {

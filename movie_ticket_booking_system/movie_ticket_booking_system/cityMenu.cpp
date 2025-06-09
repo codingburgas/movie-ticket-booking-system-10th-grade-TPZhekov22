@@ -1,14 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "createNewObjects.h"
+#include "loadObjectData.h"
 #include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
 void cityMenu()
 {
 	utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");//Add title graphic later
-	std::cout << "1: Select a cinema" << '\n';
-	std::cout << "2: Add a City" << '\n';
+	std::cout << "1: Display Cities" << '\n';
 	std::cout << "2: Back to main menu" << '\n';
 	int cityMenuScreen;
 	do {
@@ -22,10 +23,11 @@ void cityMenu()
 	switch (cityMenuScreen)
 	{
 	case 1:
-		utility::scene.currentScene = utility::scene.Cinemas;
+		
 		break;
 	case 2:
-		utility::scene.currentScene = utility::scene.Menu;
+		return;
+
 		break;
 	}
 }

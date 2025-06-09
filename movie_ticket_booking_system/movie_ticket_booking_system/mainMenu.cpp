@@ -8,7 +8,7 @@ void mainMenu()
 {
 	utility::displayTitleGraphic("../assets/titleGraphics/mainMenuTitleGraphic.txt");
 
-	std::cout << "1: Select a city" << '\n';
+	std::cout << "1: City Options" << '\n';
 	std::cout << "2: Exit" << '\n';
 	int mainMenuScreen;
 	do {
@@ -25,6 +25,7 @@ void mainMenu()
 	case 1:
 		utility::scene.currentScene = utility::scene.Cities;
 		break;
+
 	case 2:
 		utility::scene.currentScene = utility::scene.ExitEnum;
 		break;
