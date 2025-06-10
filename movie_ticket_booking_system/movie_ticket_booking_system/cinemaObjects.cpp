@@ -393,12 +393,14 @@ void City::addCinema(const Cinema& cinema)
 	m_cinemas.push_back(cinema);
 }
 
-void City::displayCinemas() const
-{
-	for (const auto& cinema : m_cinemas)
-	{
-		std::cout << "Cinema: " << cinema.getCinemaName() << '\n';
-	}
+void City::displayCinemas() const  
+{  
+   int cinemaNumber = 1;  
+   for (const auto& cinema : m_cinemas)  
+   {  
+       std::cout << "Cinema " << cinemaNumber << ": " << cinema.getCinemaName() << '\n';  
+       cinemaNumber++;  
+   }  
 }
 
 bool City::saveToFile(std::ostream& os) const

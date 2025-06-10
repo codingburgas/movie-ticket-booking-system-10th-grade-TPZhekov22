@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "selectPlace.h"
 #include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -8,7 +9,7 @@ void mainMenu()
 {
 	utility::displayTitleGraphic("../assets/titleGraphics/mainMenuTitleGraphic.txt");
 
-	std::cout << "1: City Options" << '\n';
+	std::cout << "1: Select City" << '\n';
 	std::cout << "2: Exit" << '\n';
 	int mainMenuScreen;
 	do {
@@ -23,11 +24,15 @@ void mainMenu()
 	switch (mainMenuScreen)
 	{
 	case 1:
-		utility::scene.currentScene = utility::scene.Cities;
+		utility::clearScreen();
+		selectCity();
 		break;
 
 	case 2:
-		utility::scene.currentScene = utility::scene.ExitEnum;
+		utility::clearScreen();
+
+		std::cout << "Exiting..." << '\n';
+		utility::exit = true;
 		break;
 	}
 }

@@ -27,13 +27,16 @@
     <ClCompile Include="cinemaObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cityMenu.cpp">
+    <ClCompile Include="selectPlace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="createNewObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="loadObjectData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cityManu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="loadObjectData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="selectPlace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

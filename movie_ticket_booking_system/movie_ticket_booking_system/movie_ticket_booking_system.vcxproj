@@ -131,7 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cityMenu.cpp" />
+    <ClCompile Include="cityManu.cpp" />
+    <ClCompile Include="selectPlace.cpp" />
     <ClCompile Include="createNewObjects.cpp" />
     <ClCompile Include="loadObjectData.cpp" />
     <ClCompile Include="main.cpp" />
@@ -145,6 +146,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="selectPlace.h" />
     <ClInclude Include="cinemaObjects.h" />
     <ClInclude Include="createNewObjects.h" />
     <ClInclude Include="definitions.h" />
