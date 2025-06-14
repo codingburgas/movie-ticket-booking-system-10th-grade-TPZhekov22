@@ -26,7 +26,7 @@ void createNewCity()
     }
 
 	std::cout << "Enter the name of the new city: ";
-	std::cin >> newCityName;
+	std::getline(std::cin, newCityName);
 
 	City* newCity = new City(newCityName);
     cities.push_back(*newCity);
@@ -39,22 +39,22 @@ void createNewCity()
     saveCitiesToFile(cities);
 }
 
-void saveCitiesToFile(const std::vector<City>& cities)
+bool saveCitiesToFile(const std::vector<City>& cities)
 {
     std::string fullPath = "../assets/objectData/cityObjects/cities.bin";
-
     std::ofstream outFile(fullPath, std::ios::binary);
     if (!outFile)
     {
         std::cerr << "Error: Unable to open file for writing at " << fullPath << '\n';
-        return;
+        return false;
     }
 
     size_t numCities = cities.size();
     outFile.write(reinterpret_cast<const char*>(&numCities), sizeof(numCities));
     if (!outFile) {
         std::cerr << "Error: Failed to write city count.\n";
-        return;
+        outFile.close();
+        return false;
     }
 
     for (const auto& city : cities)
@@ -63,12 +63,77 @@ void saveCitiesToFile(const std::vector<City>& cities)
         {
             std::cerr << "Error: Failed to save city to file.\n";
             outFile.close();
-            return;
+            return false;
         }
     }
 
     outFile.close();
     std::cout << "Cities saved successfully to " << fullPath << '\n';
+    return true;
+}
+
+//Cinema create and save function
+void createNewCinema(City& currentCity)
+{
+std::string newCinemaName;
+std::cout << "Enter the name of the cinema: ";
+std::cin.ignore();
+std::getline(std::cin, newCinemaName);
+
+Cinema newCinema(newCinemaName);
+
+std::cout << "Name: " << newCinema.getCinemaName() << "\n";
+std::cout << "Confirm creation of the cinema? (y/n): \n";
+char confirm;
+std::cin >> confirm;
+utility::clearScreen();
+if (confirm == 'y' || confirm == 'Y')
+{
+		currentCity.addCinema(newCinema);
+
+       std::string fullPath = "../assets/objectData/cityObjects/cities.bin";
+       std::vector<City> cities;
+       {
+           std::ifstream inFile(fullPath, std::ios::binary);
+           if (inFile)
+           {
+               size_t numCities = 0;
+               inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
+               for (size_t i = 0; i < numCities; ++i)
+               {
+                   if (auto cityOpt = City::loadFromFile(inFile))
+                       cities.push_back(std::move(*cityOpt));
+               }
+           }
+           else
+           {
+			   std::cerr << "Error: Unable to open file for reading at " << fullPath << '\n';
+			   return;
+           }
+       }
+
+       for (auto& city : cities)
+       {
+           if (city.getCityName() == currentCity.getCityName())
+           {
+               city = currentCity;
+               break;
+           }
+       }
+
+       saveCitiesToFile(cities);
+
+       if (saveCitiesToFile(cities)) {
+           std::cout << "Cinema created and saved successfully!\n";
+       }
+       else {
+           std::cerr << "Error: Cinema was created but not saved to file.\n";
+       }
+}
+else
+{
+	std::cout << "Cinema creation cancelled.\n";
+}
 }
 
 //Movie creation and save function

@@ -1,4 +1,5 @@
 #pragma once
+#include "cinemaObjects.h"
 
 void mainMenu();
-void cityMenu();
+void cityMenu(City& currentCity);

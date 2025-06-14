@@ -98,8 +98,10 @@ class City
 public:
 	City(const std::string& cityName); // Constructor to initialize the city with a name
 	const std::string& getCityName() const; // Get the name of the city
-	void addCinema(const Cinema& cinema); // Add a cinema to the city
+	std::vector<Cinema> getCinemasVector() const; // Get the cinemas in the city	
 	void displayCinemas() const; // Display all cinemas in the city
+	void addCinema(Cinema& cinema); // Add a cinema to the city
+	size_t numberOfCinemas() const; // Get the number of cinemas in the city
 
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<City> loadFromFile(std::istream& is);

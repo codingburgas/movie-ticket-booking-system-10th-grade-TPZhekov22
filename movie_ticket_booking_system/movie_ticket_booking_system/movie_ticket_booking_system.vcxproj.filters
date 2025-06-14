@@ -36,7 +36,7 @@
     <ClCompile Include="loadObjectData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cityManu.cpp">
+    <ClCompile Include="cityMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

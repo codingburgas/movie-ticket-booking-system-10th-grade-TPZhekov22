@@ -4,7 +4,9 @@
 
 //Cities vector create and save functions
 void createNewCity();
-void saveCitiesToFile(const std::vector<City>& cities);
+bool saveCitiesToFile(const std::vector<City>& cities);
+
+void createNewCinema(City& currentCity);
 
 //Movie creation function
 void createNewMovie();

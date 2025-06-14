@@ -388,7 +388,12 @@ const std::string& City::getCityName() const
 	return m_name;
 }
 
-void City::addCinema(const Cinema& cinema)
+std::vector<Cinema> City::getCinemasVector() const
+{
+	return m_cinemas;
+}
+
+void City::addCinema(Cinema& cinema)
 {
 	m_cinemas.push_back(cinema);
 }
@@ -401,6 +406,11 @@ void City::displayCinemas() const
        std::cout << "Cinema " << cinemaNumber << ": " << cinema.getCinemaName() << '\n';  
        cinemaNumber++;  
    }  
+}
+
+size_t City::numberOfCinemas() const
+{
+	return m_cinemas.size();
 }
 
 bool City::saveToFile(std::ostream& os) const
