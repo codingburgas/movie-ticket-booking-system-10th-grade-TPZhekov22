@@ -11,17 +11,17 @@ void mainMenu()
 
 	std::cout << "1: Select City" << '\n';
 	std::cout << "2: Exit" << '\n';
-	int mainMenuScreen;
+	int mainMenuOption;
 	do {
-		std::cin >> mainMenuScreen;
-		if (mainMenuScreen < MIN_MENU_CHOICES || mainMenuScreen > MAIN_MENU_MAX_CHOICES) {
+		std::cin >> mainMenuOption;
+		if (mainMenuOption < MIN_MENU_CHOICES || mainMenuOption > MAIN_MENU_MAX_CHOICES) {
 			std::cout << "Invalid option" << '\n';
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	} while (mainMenuScreen < MIN_MENU_CHOICES || mainMenuScreen > MAIN_MENU_MAX_CHOICES);
+	} while (mainMenuOption < MIN_MENU_CHOICES || mainMenuOption > MAIN_MENU_MAX_CHOICES);
 
-	switch (mainMenuScreen)
+	switch (mainMenuOption)
 	{
 	case 1:
 		utility::clearScreen();

@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cinemaMenu.cpp" />
     <ClCompile Include="cityMenu.cpp" />
     <ClCompile Include="selectPlace.cpp" />
     <ClCompile Include="createNewObjects.cpp" />

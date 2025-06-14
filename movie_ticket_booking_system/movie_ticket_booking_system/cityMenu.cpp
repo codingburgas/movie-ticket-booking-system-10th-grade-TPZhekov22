@@ -10,12 +10,11 @@ void cityMenu(City& currentCity)
 {
 	do
 	{
-		
-	
 		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
 		std::cout << "City: " << currentCity.getCityName() << '\n';
+		std::cout << '\n';
 		currentCity.displayCinemas();
-
+		std::cout << "---------------------------------------" << '\n';
 		std::cout << "1: Select a cinema" << '\n';
 		std::cout << "2: Create new cinema" << '\n';
 		std::cout << "3: Go back" << '\n';

@@ -68,8 +68,8 @@ void selectCinema(const City& currentCity)
 		}
 		else
 		{
-			// cinemaMenu function
 			utility::clearScreen();
+			cinemaMenu(currentCity.getCinemaByIndex(selectedCinemaOption - 1));
 		}
 	} while (utility::exit == false);
 }

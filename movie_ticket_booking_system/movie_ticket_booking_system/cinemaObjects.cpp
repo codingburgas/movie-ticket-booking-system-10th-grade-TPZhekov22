@@ -393,6 +393,11 @@ std::vector<Cinema> City::getCinemasVector() const
 	return m_cinemas;
 }
 
+Cinema City::getCinemaByIndex(size_t index) const
+{
+	return m_cinemas.at(index);
+}
+
 void City::addCinema(Cinema& cinema)
 {
 	m_cinemas.push_back(cinema);

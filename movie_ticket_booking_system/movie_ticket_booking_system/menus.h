@@ -3,3 +3,4 @@
 
 void mainMenu();
 void cityMenu(City& currentCity);
+void cinemaMenu(Cinema& currentCinema);

@@ -98,7 +98,8 @@ class City
 public:
 	City(const std::string& cityName); // Constructor to initialize the city with a name
 	const std::string& getCityName() const; // Get the name of the city
-	std::vector<Cinema> getCinemasVector() const; // Get the cinemas in the city	
+	std::vector<Cinema> getCinemasVector() const; // Get the cinemas in the city
+	Cinema getCinemaByIndex(size_t index) const; // Get a cinema object by index
 	void displayCinemas() const; // Display all cinemas in the city
 	void addCinema(Cinema& cinema); // Add a cinema to the city
 	size_t numberOfCinemas() const; // Get the number of cinemas in the city
