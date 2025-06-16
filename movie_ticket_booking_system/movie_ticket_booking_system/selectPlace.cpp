@@ -105,7 +105,7 @@ void selectHall(Cinema& currentCinema)
 		else
 		{
 			utility::clearScreen();
-			//hallMenu
+			//hallMenu   <---- DOING THIS RN
 		}
 	} while (utility::exit == false);
 }

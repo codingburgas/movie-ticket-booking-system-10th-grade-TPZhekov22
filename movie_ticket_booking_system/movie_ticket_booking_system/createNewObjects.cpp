@@ -54,7 +54,7 @@ bool saveCitiesToFile(const std::vector<City>& cities)
     size_t numCities = cities.size();
     outFile.write(reinterpret_cast<const char*>(&numCities), sizeof(numCities));
     if (!outFile) {
-        std::cerr << "Error: Failed to write city count.\n";
+        std::cerr << "Error: Failed to write city count." << '\n';
         outFile.close();
         return false;
     }
@@ -63,7 +63,7 @@ bool saveCitiesToFile(const std::vector<City>& cities)
     {
         if (!city.saveToFile(outFile))
         {
-            std::cerr << "Error: Failed to save city to file.\n";
+            std::cerr << "Error: Failed to save city to file." << '\n';
             outFile.close();
             return false;
         }
@@ -84,8 +84,8 @@ std::getline(std::cin, newCinemaName);
 
 Cinema newCinema(newCinemaName);
 
-std::cout << "Name: " << newCinema.getCinemaName() << "\n";
-std::cout << "Confirm creation of the cinema? (y/n): \n";
+std::cout << "Name: " << newCinema.getCinemaName() << '\n';
+std::cout << "Confirm creation of the cinema? (y/n): " << '\n';
 char confirm;
 std::cin >> confirm;
 utility::clearScreen();
@@ -126,15 +126,15 @@ if (confirm == 'y' || confirm == 'Y')
        saveCitiesToFile(cities);
 
        if (saveCitiesToFile(cities)) {
-           std::cout << "Cinema created and saved successfully!\n";
+           std::cout << "Cinema created and saved successfully!" << '\n';
        }
        else {
-           std::cerr << "Error: Cinema was created but not saved to file.\n";
+           std::cerr << "Error: Cinema was created but not saved to file." << '\n';
        }
 }
 else
 {
-	std::cout << "Cinema creation cancelled.\n";
+	std::cout << "Cinema creation cancelled." << '\n';
 }
 }
 
@@ -142,7 +142,7 @@ else
 void createNewHall(Cinema& currentCinema, City& currentCity)
 {
     Hall newHall(static_cast<int>(currentCinema.numberOfHalls()) + 1);
-    std::cout << "New hall with ID " << newHall.getHallID() << "\n";
+    std::cout << "New hall with ID " << newHall.getHallID() << '\n';
     std::cout << "Confirm creation of the hall? (y/n): ";
     char confirm;
     std::cin >> confirm;
@@ -178,15 +178,15 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
         }
 
         if (saveCitiesToFile(cities)) {
-            std::cout << "Hall created and saved successfully!\n";
+            std::cout << "Hall created and saved successfully!" << '\n';
         }
         else {
-            std::cerr << "Error: Hall was created but not saved to file.\n";
+            std::cerr << "Error: Hall was created but not saved to file." << '\n';
         }
     }
     else
     {
-        std::cout << "Hall creation cancelled.\n";
+        std::cout << "Hall creation cancelled." << '\n';
     }
 }
 
@@ -211,7 +211,7 @@ void createNewMovie()
         std::cout << "Enter release date (YYYY MM DD): ";
         std::cin >> year >> month >> day;
         if (!utility::isValidDate(year, month, day)) {
-            std::cout << "Invalid date. Please try again.\n";
+            std::cout << "Invalid date. Please try again." << '\n';
         }
     } while (!utility::isValidDate(year, month, day));
     std::chrono::year_month_day movieReleaseDate{
@@ -225,10 +225,10 @@ void createNewMovie()
 	Movie newMovie(movieTitle, movieGenre, movieReleaseDate, movieLanguage);
 
     std::cout << "New Movie Created: \n";
-    std::cout << "Title: " << newMovie.getTitle() << "\n";
-    std::cout << "Genre: " << newMovie.getGenre() << "\n";
-    std::cout << "Release Date: " << newMovie.getReleaseDate() << "\n";
-	std::cout << "Language: " << newMovie.getLanguage() << "\n";
+    std::cout << "Title: " << newMovie.getTitle() << '\n';
+    std::cout << "Genre: " << newMovie.getGenre() << '\n';
+    std::cout << "Release Date: " << newMovie.getReleaseDate() << '\n';
+	std::cout << "Language: " << newMovie.getLanguage() << '\n';
 
 	std::cout << "Confirm creation of the movie? (y/n): ";
 	char confirm;
@@ -238,21 +238,21 @@ void createNewMovie()
 		std::ofstream outFile("../assets/objectData/movieObjects/" + newMovie.getTitle() + ".bin", std::ios::binary | std::ios::app);
 		if (!outFile)
 		{
-			std::cerr << "Error: Unable to open file for writing.\n";
+			std::cerr << "Error: Unable to open file for writing." << '\n';
 			return;
 		}
 		if (!newMovie.saveToFile(outFile))
 		{
-			std::cerr << "Error: Failed to save movie to file.\n";
+			std::cerr << "Error: Failed to save movie to file." << '\n';
 			outFile.close();
 			return;
 		}
 		outFile.close();
-		std::cout << "Movie saved successfully!\n";
+		std::cout << "Movie saved successfully!" << '\n';
 	}
 	else
 	{
-		std::cout << "Movie creation cancelled.\n";
+		std::cout << "Movie creation cancelled." << '\n';
         return;
 	}
 }

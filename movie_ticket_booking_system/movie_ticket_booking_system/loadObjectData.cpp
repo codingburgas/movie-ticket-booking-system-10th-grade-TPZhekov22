@@ -20,7 +20,7 @@ std::vector<City> loadCitiesFromFile()
     inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
     if (!inFile)
     {
-        std::cerr << "Error: Failed to read city count.\n";
+        std::cerr << "Error: Failed to read city count." << '\n';
         return cities;
     }
 
@@ -29,7 +29,7 @@ std::vector<City> loadCitiesFromFile()
         auto cityOpt = City::loadFromFile(inFile);
         if (!cityOpt)
         {
-            std::cerr << "Error: Failed to load city from file.\n";
+            std::cerr << "Error: Failed to load city from file." << '\n';
             break;
         }
         cities.push_back(std::move(*cityOpt));
