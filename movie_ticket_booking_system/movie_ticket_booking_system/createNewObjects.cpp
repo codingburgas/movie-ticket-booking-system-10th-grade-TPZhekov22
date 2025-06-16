@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "loadObjectData.h"
+
 //Cities vector create and save functions
 
 void createNewCity()
@@ -134,6 +136,58 @@ else
 {
 	std::cout << "Cinema creation cancelled.\n";
 }
+}
+
+// Hall create and save function
+void createNewHall(Cinema& currentCinema, City& currentCity)
+{
+    Hall newHall(static_cast<int>(currentCinema.numberOfHalls()) + 1);
+    std::cout << "New hall with ID " << newHall.getHallID() << "\n";
+    std::cout << "Confirm creation of the hall? (y/n): ";
+    char confirm;
+    std::cin >> confirm;
+    if (confirm == 'y' || confirm == 'Y')
+    {
+        currentCinema.addHall(newHall);
+
+        for (auto& cinema : currentCity.getCinemasVector()) {
+            if (cinema.getCinemaName() == currentCinema.getCinemaName()) {
+                cinema = currentCinema;
+                break;
+            }
+        }
+
+        std::vector<City> cities;
+        std::ifstream inFile("../assets/objectData/cityObjects/cities.bin", std::ios::binary);
+        if (inFile) {
+            size_t numCities = 0;
+            inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
+            for (size_t i = 0; i < numCities; ++i) {
+                if (auto cityOpt = City::loadFromFile(inFile)) {
+                    cities.push_back(std::move(*cityOpt));
+                }
+            }
+            inFile.close();
+        }
+
+        for (auto& city : cities) {
+            if (city.getCityName() == currentCity.getCityName()) {
+                city = currentCity;
+                break;
+            }
+        }
+
+        if (saveCitiesToFile(cities)) {
+            std::cout << "Hall created and saved successfully!\n";
+        }
+        else {
+            std::cerr << "Error: Hall was created but not saved to file.\n";
+        }
+    }
+    else
+    {
+        std::cout << "Hall creation cancelled.\n";
+    }
 }
 
 //Movie creation and save function

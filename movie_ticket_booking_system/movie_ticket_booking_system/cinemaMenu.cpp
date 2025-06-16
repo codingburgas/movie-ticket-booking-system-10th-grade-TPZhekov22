@@ -3,9 +3,10 @@
 #include "loadObjectData.h"
 #include "cinemaObjects.h"
 #include "definitions.h"
+#include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
-void cinemaMenu(Cinema& currentCinema)
+void cinemaMenu(Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
@@ -16,7 +17,8 @@ void cinemaMenu(Cinema& currentCinema)
 		std::cout << "---------------------------------------" << '\n';
 		std::cout << "1: Select a hall" << '\n';
 		std::cout << "2: Create new hall" << '\n';
-		std::cout << "3: Go back" << '\n';
+		std::cout << "3: Delete hall" << '\n'; //Add later, when done with menus
+		std::cout << "4: Go back" << '\n';
 		size_t cinemaMenuOption;
 		do {
 			std::cin >> cinemaMenuOption;
@@ -30,16 +32,21 @@ void cinemaMenu(Cinema& currentCinema)
 		{
 		case 1:
 			utility::clearScreen();
-		//	selectHall();  Add later
+			selectHall(currentCinema);
 			
 			break;
 
 		case 2:
 			utility::clearScreen();
-		//	createNewHalls(currentCinema); Add later
+			createNewHall(currentCinema, currentCity);
 
 			break;
 		case 3:
+			utility::clearScreen();
+			std::cout << "This feature is not implemented yet." << '\n'; //Add later
+
+			break;
+		case 4:
 			utility::clearScreen();
 
 			return;

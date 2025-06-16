@@ -2,4 +2,5 @@
 #include "cinemaObjects.h"
 
 void selectCity();
-void selectCinema(const City& currentCity);
+void selectCinema(City& currentCity);
+void selectHall(Cinema& currentCinema);

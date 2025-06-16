@@ -38,20 +38,24 @@ void selectCity()
 	else
 	{
 		utility::clearScreen();
-		cityMenu(cities.at(selectedCityOption - 1));
+		cityMenu(cities[selectedCityOption - 1]);
+
 	}
 	} while (utility::exit == false);
 	saveCitiesToFile(cities);
 }
 
-void selectCinema(const City& currentCity)
+void selectCinema(City& currentCity)
 {
 	do
 	{
 	utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt"); // Add title graphic later "SELECT A CINEMA"
 	std::cout << "City: " << currentCity.getCityName() << '\n';
+	std::cout << '\n';
 	currentCity.displayCinemas();
 	std::cout << currentCity.numberOfCinemas() + 1 << ": Go back" << '\n';
+	std::cout << "---------------------------------------" << '\n';
+
 	size_t selectedCinemaOption;
 	do {
 		std::cin >> selectedCinemaOption;
@@ -69,7 +73,39 @@ void selectCinema(const City& currentCity)
 		else
 		{
 			utility::clearScreen();
-			cinemaMenu(currentCity.getCinemaByIndex(selectedCinemaOption - 1));
+			cinemaMenu(currentCity.getCinemasVector()[selectedCinemaOption - 1], currentCity);
+		}
+	} while (utility::exit == false);
+}
+
+void selectHall(Cinema& currentCinema)
+{
+	do
+	{
+		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt"); // Add title graphic later "SELECT A HALL"
+		std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
+		std::cout << '\n';
+		currentCinema.displayMovies();
+		std::cout << currentCinema.numberOfHalls() + 1 << ": Go back" << '\n';
+		std::cout << "---------------------------------------" << '\n';
+		size_t selectedHallOption;
+		do {
+			std::cin >> selectedHallOption;
+			if (selectedHallOption < MIN_MENU_CHOICES || selectedHallOption > currentCinema.numberOfHalls() + 1) {
+				std::cout << "Invalid option" << '\n';
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		} while (selectedHallOption < MIN_MENU_CHOICES || selectedHallOption > currentCinema.numberOfHalls() + 1);
+		if (selectedHallOption == currentCinema.numberOfHalls() + 1)
+		{
+			utility::clearScreen();
+			return;
+		}
+		else
+		{
+			utility::clearScreen();
+			//hallMenu
 		}
 	} while (utility::exit == false);
 }

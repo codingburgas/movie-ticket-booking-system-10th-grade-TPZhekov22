@@ -314,6 +314,11 @@ const std::string& Cinema::getCinemaName() const
 	return m_name;
 }
 
+std::vector<Hall> Cinema::getHallsVector() const
+{
+	return m_halls;
+}
+
 void Cinema::addHall(const Hall& hall)
 {
 	m_halls.push_back(hall);
@@ -325,6 +330,11 @@ void Cinema::displayHallsID() const
 	{
 		std::cout << "Hall# " << hall.getHallID() << '\n';
 	}
+}
+
+size_t Cinema::numberOfHalls() const
+{
+	return m_halls.size();
 }
 
 void Cinema::displayMovies() const
@@ -388,14 +398,9 @@ const std::string& City::getCityName() const
 	return m_name;
 }
 
-std::vector<Cinema> City::getCinemasVector() const
+std::vector<Cinema>& City::getCinemasVector()
 {
 	return m_cinemas;
-}
-
-Cinema City::getCinemaByIndex(size_t index) const
-{
-	return m_cinemas.at(index);
 }
 
 void City::addCinema(Cinema& cinema)
