@@ -78,7 +78,7 @@ void selectCinema(City& currentCity)
 	} while (utility::exit == false);
 }
 
-void selectHall(Cinema& currentCinema)
+void selectHall(Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
@@ -105,7 +105,7 @@ void selectHall(Cinema& currentCinema)
 		else
 		{
 			utility::clearScreen();
-			//hallMenu   <---- DOING THIS RN
+			hallMenu(currentCinema.getHallsVector()[selectedHallOption - 1], currentCinema, currentCity);
 		}
 	} while (utility::exit == false);
 }

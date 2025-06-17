@@ -9,8 +9,12 @@ bool saveCitiesToFile(const std::vector<City>& cities);
 //Cinema create and save function
 void createNewCinema(City& currentCity);
 
-// Hall creation function
+//Hall create and save function
 void createNewHall(Cinema& currentCinema, City& currentCity);
 
-//Movie creation function
-void createNewMovie();
+//MovieProjection create and save function
+void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, const MovieProjection& updatedProjection);
+void createNewMovieProjection(std::string& movieName,Hall& currentHall, Cinema& currentCinema, City& currentCity);
+
+//Movie create and save function
+void addNewMovie();

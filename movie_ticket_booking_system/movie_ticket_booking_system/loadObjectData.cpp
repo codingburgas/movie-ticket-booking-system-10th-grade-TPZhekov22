@@ -38,3 +38,24 @@ std::vector<City> loadCitiesFromFile()
     inFile.close();
     return cities;
 }
+
+// Movie loading function
+Movie loadMoviesFromFile(std::string& movieName)
+{
+
+	std::string movieFilePath = "../assets/objectData/movieObjects/" + movieName + ".bin";
+	std::ifstream inFile(movieFilePath, std::ios::binary);
+	if (!inFile)
+	{
+		std::cerr << "Error: Unable to open movie file for reading at " << movieFilePath << '\n';
+		return Movie("", "", {}, "");
+	}
+	auto movieOpt = Movie::loadFromFile(inFile);
+	if (!movieOpt)
+	{
+		std::cerr << "Error: Failed to load movie from file." << '\n';
+		return Movie("", "", {}, "");
+	}
+	inFile.close();
+	return *movieOpt;
+}

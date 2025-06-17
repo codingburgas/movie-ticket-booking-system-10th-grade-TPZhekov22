@@ -63,7 +63,8 @@ class Hall
 public:
 	Hall(int id);
 
-	void addProjection(const Movie& movie); // Add a projection to the hall
+	bool addProjection(MovieProjection& movieProjection); // Add a projection to the hall
+	std::vector<MovieProjection>& getProjectionPlan(); // Get the projection plan of the hall
 	void displayProjectionCalendar() const; // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
 
@@ -82,7 +83,7 @@ public:
 
 	void addHall(const Hall& hall); // Add a hall to the cinema
 	const std::string& getCinemaName() const; // Get the name of the cinema
-	std::vector<Hall> getHallsVector() const; // Get the halls in the cinema
+	std::vector<Hall>& getHallsVector(); // Get the halls in the cinema
 	size_t numberOfHalls() const; // Get the number of halls in the cinema
 	void displayHallsID() const; // Display all halls in the cinema
 	void displayMovies() const; // Display all movies in the cinema

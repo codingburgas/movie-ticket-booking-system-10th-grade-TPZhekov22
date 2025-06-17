@@ -32,7 +32,7 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 		{
 		case 1:
 			utility::clearScreen();
-			selectHall(currentCinema);
+			selectHall(currentCinema, currentCity);
 			
 			break;
 

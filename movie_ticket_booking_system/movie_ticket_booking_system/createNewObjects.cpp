@@ -3,7 +3,6 @@
 #include "../system_static_library/namespaceUtility.h"
 #include <fstream>
 #include <iostream>
-
 #include "loadObjectData.h"
 
 //Cities vector create and save functions
@@ -11,21 +10,7 @@
 void createNewCity()
 {
 	std::string newCityName;
-    std::string fullPath = "../assets/objectData/cityObjects/cities.bin";
-    std::vector<City> cities;
-    {
-        std::ifstream inFile(fullPath, std::ios::binary);
-        if (inFile)
-        {
-            size_t numCities = 0;
-            inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
-            for (size_t i = 0; i < numCities; ++i)
-            {
-	            if (auto cityOpt = City::loadFromFile(inFile))
-                    cities.push_back(std::move(*cityOpt));
-            }
-        }
-    }
+    std::vector<City> cities = loadCitiesFromFile();
 
 	std::cout << "Enter the name of the new city: ";
 	std::getline(std::cin, newCityName);
@@ -93,26 +78,7 @@ if (confirm == 'y' || confirm == 'Y')
 {
 		currentCity.addCinema(newCinema);
 
-       std::string fullPath = "../assets/objectData/cityObjects/cities.bin";
-       std::vector<City> cities;
-       {
-           std::ifstream inFile(fullPath, std::ios::binary);
-           if (inFile)
-           {
-               size_t numCities = 0;
-               inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
-               for (size_t i = 0; i < numCities; ++i)
-               {
-                   if (auto cityOpt = City::loadFromFile(inFile))
-                       cities.push_back(std::move(*cityOpt));
-               }
-           }
-           else
-           {
-			   std::cerr << "Error: Unable to open file for reading at " << fullPath << '\n';
-			   return;
-           }
-       }
+       std::vector<City> cities = loadCitiesFromFile();
 
        for (auto& city : cities)
        {
@@ -157,18 +123,7 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
             }
         }
 
-        std::vector<City> cities;
-        std::ifstream inFile("../assets/objectData/cityObjects/cities.bin", std::ios::binary);
-        if (inFile) {
-            size_t numCities = 0;
-            inFile.read(reinterpret_cast<char*>(&numCities), sizeof(numCities));
-            for (size_t i = 0; i < numCities; ++i) {
-                if (auto cityOpt = City::loadFromFile(inFile)) {
-                    cities.push_back(std::move(*cityOpt));
-                }
-            }
-            inFile.close();
-        }
+        std::vector<City> cities = loadCitiesFromFile();
 
         for (auto& city : cities) {
             if (city.getCityName() == currentCity.getCityName()) {
@@ -190,8 +145,91 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
     }
 }
 
-//Movie creation and save function
-void createNewMovie()
+// Movie Projection create and save functions
+void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, const MovieProjection& updatedProjection)
+{
+   for (auto& projection : currentHall.getProjectionPlan()) {
+       if (projection.getProjectionTime() == updatedProjection.getProjectionTime()) {
+           projection = updatedProjection;
+           break;
+       }
+   }
+
+   for (auto& hall : currentCinema.getHallsVector()) {
+       if (hall.getHallID() == currentHall.getHallID()) {
+           hall = currentHall;
+           break;
+       }
+   }
+
+   for (auto& cinema : currentCity.getCinemasVector()) {
+       if (cinema.getCinemaName() == currentCinema.getCinemaName()) {
+           cinema = currentCinema;
+           break;
+       }
+   }
+
+   std::vector<City> cities = loadCitiesFromFile();
+
+   for (auto& city : cities) {
+       if (city.getCityName() == currentCity.getCityName()) {
+           city = currentCity;
+           break;
+       }
+   }
+
+   if (saveCitiesToFile(cities)) {
+       std::cout << "Movie projection changes were saved successfully!" << '\n';
+   }
+   else {
+       std::cerr << "Error: Movie projection changes were not saved to file." << '\n';
+   }
+}
+
+
+void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
+{
+    std::string movieName;
+	std::cout << "Enter the name of the movie you want to make a projection for: ";
+    std::cin.ignore();
+    std::getline(std::cin, movieName);
+	if (movieName.empty())
+	{
+		std::cerr << "Error: Movie name cannot be empty." << '\n';
+		return;
+	}
+	else if (!utility::isValidFilePath("../assets/objectData/movieObjects/" + movieName + ".bin")); //Create a function to check if the file exists  NOW <------DOING THIS NOW
+	{
+		std::cerr << "Error: Movie file does not exist." << '\n';
+		return;
+	}
+
+	   int startingTime;
+	std::cout << "Enter the starting time of the movie projection (0-23): ";
+	std::cin >> startingTime;
+
+	Movie newMovie = loadMoviesFromFile(movieName);
+	MovieProjection newProjection(newMovie, startingTime);
+	std::cout << "New Movie Projection Created in hall " << currentHall.getHallID() <<": " << '\n';
+	std::cout << "Movie Name: " << newProjection.getProjectionMovieTitle() << '\n';
+	std::cout << "Starting Time: " << newProjection.getProjectionTime() << '\n';
+	std::cout << "Confirm creation of the movie projection? (y/n): ";
+	char confirm;
+	std::cin >> confirm;
+	if (confirm == 'y' || confirm == 'Y')
+	{
+		currentHall.addProjection(newProjection);
+		saveMovieProjection(currentHall, currentCinema, currentCity, newProjection);
+	}
+	else
+	{
+		std::cout << "Movie projection creation cancelled." << '\n';
+		return;
+	} 
+}
+
+//Movie create and save function
+void addNewMovie()
 {
 	std::string movieTitle;
 	std::string movieGenre;

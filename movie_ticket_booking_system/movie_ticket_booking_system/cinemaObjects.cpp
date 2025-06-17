@@ -227,18 +227,15 @@ Hall::Hall(int id) : m_ID(id)
 {
 }
 
-void Hall::addProjection(const Movie& movie)
+bool Hall::addProjection(MovieProjection& movieProjection)
 {
 	if (m_projectionPlan.size() >= 15)
 	{
 		std::cout << "Cannot add more projections. Maximum limit reached(15)." << '\n';
-		return;
+		return false;
 	}
-	int tempTime;
-	std::cout << "Enter the starting time of the projection (0-23): " << '\n';
-	std::cin >> tempTime;
-	MovieProjection tempProjection(movie, tempTime);
-	m_projectionPlan.push_back(std::move(tempProjection));
+	m_projectionPlan.push_back(std::move(movieProjection));
+	return true;
 }
 
 void Hall::displayProjectionCalendar() const
@@ -252,6 +249,11 @@ void Hall::displayProjectionCalendar() const
 		std::cout << "Language: " << m_projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';
 		std::cout << "Projection Time: " << m_projectionPlan.at(temp).getProjectionTime() << ":00" << '\n';
 	}
+}
+
+std::vector<MovieProjection>& Hall::getProjectionPlan()
+{
+	return m_projectionPlan;
 }
 
 int Hall::getHallID() const
@@ -314,7 +316,7 @@ const std::string& Cinema::getCinemaName() const
 	return m_name;
 }
 
-std::vector<Hall> Cinema::getHallsVector() const
+std::vector<Hall>& Cinema::getHallsVector()
 {
 	return m_halls;
 }
