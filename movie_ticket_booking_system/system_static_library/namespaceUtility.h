@@ -28,7 +28,8 @@ namespace utility
         size_t strLength = str.size();
         os.write(reinterpret_cast<const char*>(&strLength), sizeof(strLength));
         if (!os) return false;
-        os.write(str.data(), strLength);
+        std::streamsize streamLength = static_cast<std::streamsize>(strLength);
+        os.write(str.data(), streamLength);
         return os.good();
     }
 
@@ -37,7 +38,10 @@ namespace utility
         is.read(reinterpret_cast<char*>(&strLength), sizeof(strLength));
         if (!is) return false;
         str.resize(strLength);
-        is.read(str.data(), strLength);
+        std::streamsize streamLength = static_cast<std::streamsize>(strLength);
+        is.read(str.data(), streamLength);
         return is.good();
     }
+
+    bool fileExists(const std::string& filePath);
 }

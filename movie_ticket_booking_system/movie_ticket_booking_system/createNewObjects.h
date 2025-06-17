@@ -14,7 +14,7 @@ void createNewHall(Cinema& currentCinema, City& currentCity);
 
 //MovieProjection create and save function
 void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, const MovieProjection& updatedProjection);
-void createNewMovieProjection(std::string& movieName,Hall& currentHall, Cinema& currentCinema, City& currentCity);
+void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity);
 
 //Movie create and save function
 void addNewMovie();

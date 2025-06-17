@@ -1,10 +1,11 @@
 #include <chrono>
 #include "cinemaObjects.h"
+
+#include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
 // Movie class implementation
-Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
-             const std::string& movieLanguage)
+Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,const std::string& movieLanguage)
 	: m_title(movieTitle), m_genre(movieGenre), m_releaseDate(movieDate), m_language(movieLanguage)
 {
 }
@@ -61,7 +62,7 @@ std::optional<Movie> Movie::loadFromFile(std::istream& is) {
 }
 
 // MovieProjection class implementation
-MovieProjection::MovieProjection(const Movie& movie, int startingTime):
+MovieProjection::MovieProjection(const Movie movie, int startingTime):
 m_projectionMovie(movie), m_startingTime(startingTime)
 {
 	int tempTime = startingTime;
@@ -74,6 +75,7 @@ m_projectionMovie(movie), m_startingTime(startingTime)
 	}
 	this->m_startingTime = tempTime;
 
+	m_seats.resize(SEAT_PLAN_ROWS, std::vector(SEAT_PLAN_COLS, false));
 	for (size_t rows = 0; rows < SEAT_PLAN_ROWS; rows++)
 	{
 		for (size_t cols = 0; cols < SEAT_PLAN_COLS; cols++)
@@ -229,21 +231,21 @@ Hall::Hall(int id) : m_ID(id)
 
 bool Hall::addProjection(MovieProjection& movieProjection)
 {
-	if (m_projectionPlan.size() >= 15)
+	if (m_projectionPlan.size() >= MAX_PROJECTION_SIZE)
 	{
 		std::cout << "Cannot add more projections. Maximum limit reached(15)." << '\n';
 		return false;
 	}
-	m_projectionPlan.push_back(std::move(movieProjection));
+	m_projectionPlan.push_back(movieProjection);
 	return true;
 }
 
 void Hall::displayProjectionCalendar() const
 {
-	std::cout << "Projection Calendar for hall: " << m_ID << '\n';
+	std::cout << "Projection Calendar for hall " << m_ID << ": " <<'\n';
 	for (size_t temp = 0; temp < m_projectionPlan.size(); temp++)
 	{
-		std::cout << temp << "# Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
+		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
 		std::cout << "Genre: " << m_projectionPlan.at(temp).getProjectionMovieGenre() << '\n';
 		std::cout << "Release Date: " << m_projectionPlan.at(temp).getProjectionMovieReleaseDate() << '\n';
 		std::cout << "Language: " << m_projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';

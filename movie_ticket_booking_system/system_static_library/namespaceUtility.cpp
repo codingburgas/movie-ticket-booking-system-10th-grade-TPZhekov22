@@ -59,5 +59,11 @@ namespace utility
 			return day <= 31;
 		}
 	}
-	
+
+	bool fileExists(const std::string& filePath)
+	{
+		std::ifstream file(filePath);
+		return file.good();
+	}
+
 }

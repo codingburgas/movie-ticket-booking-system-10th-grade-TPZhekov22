@@ -17,7 +17,7 @@ class Movie
 
 public:
 	Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
-	      const std::string& movieLanguage); //Constructor 
+	      const std::string& movieLanguage);
 
 	const std::string& getTitle() const;
 	const std::string& getGenre() const;
@@ -37,7 +37,7 @@ class MovieProjection
 	int m_startingTime;
 
 public:
-	MovieProjection(const Movie& movie, int startingTime);
+	MovieProjection(const Movie movie, int startingTime);
 
 
 	void displaySeatPlan() const; // Display the seat plan for the projection

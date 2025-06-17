@@ -190,19 +190,23 @@ void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& current
 void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
     std::string movieName;
-	std::cout << "Enter the name of the movie you want to make a projection for: ";
-    std::cin.ignore();
-    std::getline(std::cin, movieName);
-	if (movieName.empty())
+	std::cout << "Enter the name of the movie you want to make a projection for or cancel by typing 'CANCEL MOVIE' : ";
+    do
 	{
-		std::cerr << "Error: Movie name cannot be empty." << '\n';
-		return;
-	}
-	else if (!utility::isValidFilePath("../assets/objectData/movieObjects/" + movieName + ".bin")); //Create a function to check if the file exists  NOW <------DOING THIS NOW
-	{
-		std::cerr << "Error: Movie file does not exist." << '\n';
-		return;
-	}
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
+		std::cin.clear();
+	    std::getline(std::cin, movieName);
+		if (movieName == "CANCEL MOVIE")
+		{
+			std::cout << "Movie projection creation cancelled." << '\n';
+			return;
+		}
+        else if (movieName.empty() || !utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"))
+		{
+			std::cerr << "Error: Movie name is empty or it does not exist." << '\n';
+		}
+
+    } while (!utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"));
 
 	   int startingTime;
 	std::cout << "Enter the starting time of the movie projection (0-23): ";
@@ -212,7 +216,7 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 	MovieProjection newProjection(newMovie, startingTime);
 	std::cout << "New Movie Projection Created in hall " << currentHall.getHallID() <<": " << '\n';
 	std::cout << "Movie Name: " << newProjection.getProjectionMovieTitle() << '\n';
-	std::cout << "Starting Time: " << newProjection.getProjectionTime() << '\n';
+	std::cout << "Starting Time: " << newProjection.getProjectionTime() << ":00" << '\n';
 	std::cout << "Confirm creation of the movie projection? (y/n): ";
 	char confirm;
 	std::cin >> confirm;

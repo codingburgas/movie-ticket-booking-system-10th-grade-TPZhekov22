@@ -48,13 +48,13 @@ Movie loadMoviesFromFile(std::string& movieName)
 	if (!inFile)
 	{
 		std::cerr << "Error: Unable to open movie file for reading at " << movieFilePath << '\n';
-		return Movie("", "", {}, "");
+		return Movie("error", "error", {}, "error");
 	}
 	auto movieOpt = Movie::loadFromFile(inFile);
 	if (!movieOpt)
 	{
 		std::cerr << "Error: Failed to load movie from file." << '\n';
-		return Movie("", "", {}, "");
+		return Movie("error", "error", {}, "error");
 	}
 	inFile.close();
 	return *movieOpt;
