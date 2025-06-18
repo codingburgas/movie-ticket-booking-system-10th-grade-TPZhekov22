@@ -116,23 +116,73 @@ void MovieProjection::setProjectionTime(int projectionStartTime)
 	this->m_startingTime = tempTime;
 }
 
-void MovieProjection::displaySeatPlan() const
-{
-	for (size_t row = 0; row < SEAT_PLAN_ROWS; row++)
-	{
-		for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
-		{
-			if (m_seats[row][col] == true)
-			{
-				std::cout << "#";
-			}
-			else
-			{
-				std::cout << "0";
-			}
-		}
-		std::cout << '\n';
-	}
+void MovieProjection::displaySeatPlan() const  
+{  
+   std::cout << "Movie Title: " << m_projectionMovie.getTitle() << '\n';  
+   std::cout << "Movie Language: " << m_projectionMovie.getLanguage() << '\n';  
+   std::cout << "Movie Genre: " << m_projectionMovie.getGenre() << '\n';  
+   std::cout << "Movie Release Date: "; utility::displayDate(m_projectionMovie.getReleaseDate());  
+   std::cout << '\n';  
+   std::cout << "---------------------------------------------" << '\n';  
+   std::cout << '\n';  
+   std::cout << "Starting Time: " << m_startingTime << ":00" << '\n';  
+   std::cout << "Seat Plan for Movie Projection: " << m_projectionMovie.getTitle() << '\n';  
+   std::cout << '\n';
+   std::cout << "'X' - the seat is already taken" << '\n';
+   std::cout << "'0' - the seat is available" << '\n';
+   std::cout << '\n';
+
+   std::cout << "                                          SCREEN" << '\n';
+   std::cout << " _________________________________________________________________________________________" << '\n';
+   std::cout << " |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << '\n'; //49
+   std::cout << " -----------------------------------------------------------------------------------------" << '\n';
+   std::cout << '\n';
+
+   // Print top border
+   std::cout << "             ";
+   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+   {
+	   std::cout << " -----";
+   }
+   std::cout << '\n';
+
+   for (size_t row = 0; row < SEAT_PLAN_ROWS; row++)
+   {
+	   // Print row number (1-based, aligned)
+	   std::cout << "         " << (row + 1 < 10 ? " " : "") << row + 1 << "  ";
+	   // First line: seat symbol
+	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+	   {
+		   std::cout << "|  ";
+		   if (m_seats[row][col])
+			   std::cout << "X";
+		   else
+			   std::cout << "0";
+		   std::cout << "  ";
+	   }
+	   std::cout << "|" << '\n';
+
+	   // Second line: column number
+	   std::cout << "             ";
+	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+	   {
+		   // Center the column number
+		   int colNum = static_cast<int>(col) + 1;
+		   if (colNum < 10)
+			   std::cout << "|  " << colNum << "  ";
+		   else
+			   std::cout << "| " << colNum << "  ";
+	   }
+	   std::cout << "|" << '\n';
+
+	   // Print bottom border of boxes
+	   std::cout << "             ";
+	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+	   {
+		   std::cout << " -----";
+	   }
+	   std::cout << '\n';
+   }
 }
 
 int MovieProjection::getProjectionTime() const
@@ -261,6 +311,11 @@ std::vector<MovieProjection>& Hall::getProjectionPlan()
 int Hall::getHallID() const
 {
 	return m_ID;
+}
+
+size_t Hall::numberOfProjections() const
+{
+	return m_projectionPlan.size();
 }
 
 bool Hall::saveToFile(std::ostream& os) const

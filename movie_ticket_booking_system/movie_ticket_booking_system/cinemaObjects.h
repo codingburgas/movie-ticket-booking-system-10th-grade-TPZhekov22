@@ -67,6 +67,7 @@ public:
 	std::vector<MovieProjection>& getProjectionPlan(); // Get the projection plan of the hall
 	void displayProjectionCalendar() const; // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
+	size_t numberOfProjections() const; // Get the number of projections in the hall
 
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<Hall> loadFromFile(std::istream& is);

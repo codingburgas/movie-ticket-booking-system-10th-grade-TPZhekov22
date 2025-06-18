@@ -193,7 +193,7 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 	std::cout << "Enter the name of the movie you want to make a projection for or cancel by typing 'CANCEL MOVIE' : ";
     do
 	{
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::cin.clear();
 	    std::getline(std::cin, movieName);
 		if (movieName == "CANCEL MOVIE")

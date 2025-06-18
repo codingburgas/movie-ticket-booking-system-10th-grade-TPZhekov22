@@ -31,7 +31,7 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 		{
 		case 1:
 			utility::clearScreen();
-			// selectMovieProjection(currentHall, currentCinema, currentCity); // Add later
+			// selectMovieProjection(currentHall, currentCinema, currentCity); // <--- DOING THIS NOW
 			break;
 		case 2:
 			utility::clearScreen();

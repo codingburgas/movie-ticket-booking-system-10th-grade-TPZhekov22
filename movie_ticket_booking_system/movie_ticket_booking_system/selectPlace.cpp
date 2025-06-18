@@ -109,3 +109,35 @@ void selectHall(Cinema& currentCinema, City& currentCity)
 		}
 	} while (utility::exit == false);
 }
+
+void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
+{
+	do
+	{
+		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt"); // Add title graphic later "SELECT A MOVIE PROJECTION"
+		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
+		std::cout << '\n';
+		currentHall.displayProjectionCalendar();
+		std::cout << currentHall.numberOfProjections() + 1 << ": Go back" << '\n';
+		std::cout << "---------------------------------------" << '\n';
+		size_t selectedProjectionOption;
+		do {
+			std::cin >> selectedProjectionOption;
+			if (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1) {
+				std::cout << "Invalid option" << '\n';
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		} while (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1);
+		if (selectedProjectionOption == currentHall.numberOfProjections() + 1)
+		{
+			utility::clearScreen();
+			return;
+		}
+		else
+		{
+			utility::clearScreen();
+			projectionMenu(currentHall.getProjectionPlan()[selectedProjectionOption - 1], currentHall, currentCinema, currentCity); // <---- DO THIS NOW
+		}
+	} while (utility::exit == false);
+}
