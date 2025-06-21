@@ -1,6 +1,5 @@
 #include <chrono>
 #include "cinemaObjects.h"
-
 #include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -117,21 +116,10 @@ void MovieProjection::setProjectionTime(int projectionStartTime)
 }
 
 void MovieProjection::displaySeatPlan() const  
-{  
-   std::cout << "Movie Title: " << m_projectionMovie.getTitle() << '\n';  
-   std::cout << "Movie Language: " << m_projectionMovie.getLanguage() << '\n';  
-   std::cout << "Movie Genre: " << m_projectionMovie.getGenre() << '\n';  
-   std::cout << "Movie Release Date: "; utility::displayDate(m_projectionMovie.getReleaseDate());  
-   std::cout << '\n';  
-   std::cout << "---------------------------------------------" << '\n';  
-   std::cout << '\n';  
-   std::cout << "Starting Time: " << m_startingTime << ":00" << '\n';  
-   std::cout << "Seat Plan for Movie Projection: " << m_projectionMovie.getTitle() << '\n';  
-   std::cout << '\n';
+{
    std::cout << "'X' - the seat is already taken" << '\n';
    std::cout << "'0' - the seat is available" << '\n';
    std::cout << '\n';
-
    std::cout << "                                          SCREEN" << '\n';
    std::cout << " _________________________________________________________________________________________" << '\n';
    std::cout << " |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << '\n'; //49
@@ -292,7 +280,7 @@ bool Hall::addProjection(MovieProjection& movieProjection)
 
 void Hall::displayProjectionCalendar() const
 {
-	std::cout << "Projection Calendar for hall " << m_ID << ": " <<'\n';
+	std::cout << '\n';
 	for (size_t temp = 0; temp < m_projectionPlan.size(); temp++)
 	{
 		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
@@ -402,6 +390,8 @@ void Cinema::displayMovies() const
 	{
 		std::cout << "Hall ID: " << hall.getHallID() << '\n';
 		hall.displayProjectionCalendar();
+		std::cout << '\n';
+		std::cout << '\n';
 	}
 }
 

@@ -4,9 +4,6 @@
 #include <vector>
 #include <optional>
 
-#define SEAT_PLAN_ROWS 10
-#define SEAT_PLAN_COLS 10
-
 // Movie class declaration
 class Movie
 {

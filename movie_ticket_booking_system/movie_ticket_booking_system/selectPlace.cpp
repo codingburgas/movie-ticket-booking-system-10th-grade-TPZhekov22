@@ -38,7 +38,7 @@ void selectCity()
 	else
 	{
 		utility::clearScreen();
-		cityMenu(cities[selectedCityOption - 1]);
+		cityMenu(cities.at(selectedCityOption - 1));
 
 	}
 	} while (utility::exit == false);
@@ -73,7 +73,7 @@ void selectCinema(City& currentCity)
 		else
 		{
 			utility::clearScreen();
-			cinemaMenu(currentCity.getCinemasVector()[selectedCinemaOption - 1], currentCity);
+			cinemaMenu(currentCity.getCinemasVector().at(selectedCinemaOption - 1), currentCity);
 		}
 	} while (utility::exit == false);
 }
@@ -105,7 +105,7 @@ void selectHall(Cinema& currentCinema, City& currentCity)
 		else
 		{
 			utility::clearScreen();
-			hallMenu(currentCinema.getHallsVector()[selectedHallOption - 1], currentCinema, currentCity);
+			hallMenu(currentCinema.getHallsVector().at(selectedHallOption - 1), currentCinema, currentCity);
 		}
 	} while (utility::exit == false);
 }
@@ -137,7 +137,7 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		else
 		{
 			utility::clearScreen();
-			projectionMenu(currentHall.getProjectionPlan()[selectedProjectionOption - 1], currentHall, currentCinema, currentCity); // <---- DO THIS NOW
+			//projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema, currentCity); // <---- DO THIS NOW
 		}
 	} while (utility::exit == false);
 }

@@ -44,4 +44,7 @@ namespace utility
     }
 
     bool fileExists(const std::string& filePath);
+    bool vectorLinearSearch(std::vector<int>& vec, int& target);
+    bool vectorLinearSearch2D(const std::vector<std::vector<int>>& vec, int target) {
+   
 }

@@ -66,4 +66,25 @@ namespace utility
 		return file.good();
 	}
 
+	bool vectorLinearSearch(std::vector<int>& vec, int& target) {
+		for (int temp : vec)
+		{
+			if (temp == target) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int value) { //You are deciding how to check if which seat is already selected <---- NOW
+		for (auto& row : vec) {
+			for (auto& col : row) {
+				if (col == value) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }
