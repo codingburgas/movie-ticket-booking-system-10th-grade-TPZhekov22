@@ -4,12 +4,11 @@
 #include "definitions.h"
 #include "menus.h"
 #include <vector>
+#include <thread>
+#include <chrono>
 
-
-#define SEAT_PLAN_ROWS 10
-#define SEAT_PLAN_COLS 10
-
-void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, Cinema& currentCinema, City& currentCity)
+void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, Cinema& currentCinema,
+                    City& currentCity)
 {
 	do
 	{
@@ -17,7 +16,8 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 		selectedSeats.resize(SEAT_PLAN_ROWS);
 		do
 		{
-			utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt"); // Add title graphic later "MOVIE PROJECTION MENU"
+			utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
+			// Add title graphic later "MOVIE PROJECTION MENU"
 			std::cout << "Movie projection: " << currentMovieProjection.getProjectionMovieTitle() << '\n';
 			std::cout << "Genre: " << currentMovieProjection.getProjectionMovieGenre() << '\n';
 			std::cout << "Release Date: " << currentMovieProjection.getProjectionMovieReleaseDate() << '\n';
@@ -35,7 +35,8 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 				{
 					if (selectedSeats.at(row).at(col) + 1 != 0)
 					{
-						std::cout << "row: " << row + 1 << " seat number: " << selectedSeats.at(row).at(col) + 1 << '\n';
+						std::cout << "row: " << row + 1 << " seat number: " << selectedSeats.at(row).at(col) + 1 <<
+							'\n';
 					}
 				}
 			}
@@ -94,13 +95,16 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 					while ((selectedCol < MIN_MENU_CHOICES || selectedCol > SEAT_PLAN_ROWS) && selectedCol != 1234);
 					if (selectedCol != 1234)
 					{
-						if (utility::vectorLinearSearchRow2D(selectedSeats, selectedRow, selectedCol))
+						if (utility::vectorLinearSearchRow2D(selectedSeats, selectedRow - 1, selectedCol - 1))
 						{
 							std::cout << "This seat is already selected." << '\n';
+							std::this_thread::sleep_for(std::chrono::seconds(3));
 						}
-						else if (currentMovieProjection.checkSeatAvailability(selectedRow, selectedCol))
+						else if (currentMovieProjection.checkSeatAvailability(selectedRow - 1, selectedCol - 1))
+						//If this function doesn't work, check if the indexing is correct
 						{
 							std::cout << "This seat has already been booked and is unavailable." << '\n';
+							std::this_thread::sleep_for(std::chrono::seconds(3));
 						}
 						else
 						{
@@ -117,12 +121,14 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 							else
 							{
 								std::cout << "Seat selection cancelled." << '\n';
+								std::this_thread::sleep_for(std::chrono::seconds(2));
 							}
 						}
 					}
 					else
 					{
 						std::cout << "Seat selection cancelled." << '\n';
+						std::this_thread::sleep_for(std::chrono::seconds(2));
 					}
 				}
 				utility::clearScreen();
@@ -168,14 +174,80 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 					else
 					{
 						std::cout << "Canceled seat unselection." << '\n';
+						std::this_thread::sleep_for(std::chrono::seconds(2));
 					}
 				}
 				utility::clearScreen();
 
 				break;
 			case 3:
+				if (selectedSeats.empty() || utility::is2DVectorEmpty(selectedSeats))
+				{
+					std::cout << "No seats selected." << '\n';
+					std::cout << "Going back to the projection menu..." << '\n';
+					std::this_thread::sleep_for(std::chrono::seconds(3));
+				}
+				else
+				{
+					double sum = 0;
+
+
+					int rowIndex = 0;
+					for (const auto& row : selectedSeats)
+					{
+						if (!row.empty())
+						{
+							for (const auto& seat : row)
+							{
+								if (seat + 1 != 0)
+								{
+									if (rowIndex < PLATINUM_SEAT_ROW_LIMIT)
+									{
+										sum += PLATINUM_SEAT_PRICE;
+									}
+									else if (rowIndex < GOLD_SEAT_ROW_LIMIT)
+									{
+										sum += GOLD_SEAT_PRICE;
+									}
+									else
+									{
+										sum += SILVER_SEAT_PRICE;
+									}
+								}
+							}
+						}
+						++rowIndex;
+					}
+
+					std::cout << "Current selected seats:" << '\n';
+					for (size_t row = 0; row < selectedSeats.size(); row++)
+					{
+						for (size_t col = 0; col < selectedSeats.at(row).size(); col++)
+						{
+							if (selectedSeats.at(row).at(col) + 1 != 0)
+							{
+								std::cout << "row: " << row + 1 << " seat number: " << selectedSeats.at(row).at(col) + 1
+									<< " - ";
+								if (row < PLATINUM_SEAT_ROW_LIMIT)
+								{
+									std::cout << "Platinum seat: " << PLATINUM_SEAT_PRICE << " BGN" << '\n';
+								}
+								else if (row < GOLD_SEAT_ROW_LIMIT)
+								{
+									std::cout << "Gold seat: " << GOLD_SEAT_PRICE << " BGN" << '\n';
+								}
+								else
+								{
+									std::cout << "Silver seat: " << SILVER_SEAT_PRICE << " BGN" << '\n';
+								}
+							}
+						}
+					}
+					std::cout << '\n';
+					std::cout << "Total price: " << sum << " BGN" << '\n';
+				}
+				std::this_thread::sleep_for(std::chrono::seconds(7)); //DO THIS NOW (STILL NOT FINISHED) <----
 				utility::clearScreen();
-			// Purchase tickets function <-- DO NEXT
 
 				break;
 			case 4:

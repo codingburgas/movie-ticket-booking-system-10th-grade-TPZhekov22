@@ -85,7 +85,7 @@ m_projectionMovie(movie), m_startingTime(startingTime)
 	}
 }
 
-bool MovieProjection::checkSeatAvailability(int& selectedRow, int& selectedCol) const
+bool MovieProjection::checkSeatAvailability(int selectedRow, int selectedCol) const
 {
 	if (m_seats.at(selectedRow - 1).at(selectedCol - 1) == true)
 	{

@@ -45,9 +45,10 @@ namespace utility
     bool fileExists(const std::string& filePath);
 
     bool vectorLinearSearch(std::vector<int>& vec, int& target);
-    bool vectorLinearSearch2D(const std::vector<std::vector<int>>& vec, int target);
+    bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int target);
 	bool vectorLinearSearchRow2D(std::vector<std::vector<int>>&vec, int specificRow, int value);
 
     bool removeFrom2DVectorRow(std::vector<std::vector<int>>& vec, int rowIndex, int value);
 
+    bool is2DVectorEmpty(std::vector<std::vector<int>>& vec);
 }

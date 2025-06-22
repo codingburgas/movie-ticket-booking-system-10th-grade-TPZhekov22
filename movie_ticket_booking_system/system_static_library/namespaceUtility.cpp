@@ -74,6 +74,10 @@ namespace utility
 		return file.good();
 	}
 
+	bool is2DVectorEmpty(std::vector<std::vector<int>>& vec) {
+		return std::ranges::all_of(vec, [](const auto& row) { return row.empty(); });
+	}
+
 	bool vectorLinearSearch(std::vector<int>& vec, int& target)
 	{
 		for (int temp : vec)
@@ -85,11 +89,11 @@ namespace utility
 		return false;
 	}
 
-    bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int value)
+	bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int target)
     { 
     	for (auto& row : vec) 
     	{
-    		if (std::ranges::find(row, value) != row.end()) {
+    		if (std::ranges::find(row, target) != row.end()) {
     			return true;
     		}
     	}
