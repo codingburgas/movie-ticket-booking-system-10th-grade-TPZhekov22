@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "menus.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"

@@ -44,7 +44,8 @@ public:
 	std::chrono::year_month_day getProjectionMovieReleaseDate() const; // Get the release date of the movie
 	const std::string& getProjectionMovieLanguage() const; // Get the language of the movie
 
-	bool bookTicket(int row, int col); // Book a ticket for a specific seat
+	bool bookTicket(int row, int col); // Book a ticket for a specific seat     //MODIFY TO USE 2D VECTOR std::vector<std::vector<int>> selectedSeats;
+	bool checkSeatAvailability(int& selectedRow, int& selectedCol) const; // Check if a seat is available
 	void setProjectionTime(int projectionStartTime); // Set the projection time
 
 	bool saveToFile(std::ostream& os) const;

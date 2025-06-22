@@ -137,7 +137,7 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		else
 		{
 			utility::clearScreen();
-			//projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema, currentCity); // <---- DO THIS NOW
+			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema, currentCity);
 		}
 	} while (utility::exit == false);
 }

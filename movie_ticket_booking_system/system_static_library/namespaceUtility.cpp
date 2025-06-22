@@ -1,9 +1,16 @@
 #include "namespaceUtility.h"
+#include <chrono>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ranges>
+#include <algorithm>
 
 namespace utility
 {
+	//StructScene scene;
+
     bool exit = false;
-    StructScene scene;
 
     void clearScreen()
     {
@@ -43,7 +50,8 @@ namespace utility
 		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	}
 
-	bool isValidDate(int year, int month, int day) {
+	bool isValidDate(int year, int month, int day)
+	{
 		if (month < 1 || month > 12) return false;
 		if (day < 1) return false;
 
@@ -66,7 +74,8 @@ namespace utility
 		return file.good();
 	}
 
-	bool vectorLinearSearch(std::vector<int>& vec, int& target) {
+	bool vectorLinearSearch(std::vector<int>& vec, int& target)
+	{
 		for (int temp : vec)
 		{
 			if (temp == target) {
@@ -76,15 +85,38 @@ namespace utility
 		return false;
 	}
 
-	bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int value) { //You are deciding how to check if which seat is already selected <---- NOW
-		for (auto& row : vec) {
-			for (auto& col : row) {
-				if (col == value) {
-					return true;
-				}
-			}
+    bool vectorLinearSearch2D(std::vector<std::vector<int>>& vec, int value)
+    { 
+    	for (auto& row : vec) 
+    	{
+    		if (std::ranges::find(row, value) != row.end()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
+    bool vectorLinearSearchRow2D(std::vector<std::vector<int>>& vec, int specificRow, int value)  
+    {  
+       auto& row = vec.at(specificRow);  
+       return std::ranges::find(row, value) != row.end();  
+    }
+
+	bool removeFrom2DVectorRow(std::vector<std::vector<int>>& vec, int rowIndex, int value) {
+		if (rowIndex < 0 || rowIndex >= static_cast<int>(vec.size()))
+			return false;
+
+		auto& row = vec.at(rowIndex);
+		auto it = std::ranges::find(row, value);
+		if (it != row.end()) {
+			row.erase(it);
+			return true;
 		}
-		return false;
+		else {
+			return false;
+		}
 	}
+
+
 
 }

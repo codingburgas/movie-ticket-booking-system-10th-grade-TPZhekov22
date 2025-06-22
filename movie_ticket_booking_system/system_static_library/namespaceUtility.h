@@ -1,20 +1,19 @@
 #pragma once
 #include <chrono>
-#include <cstdint>
 #include <string>
-#include <iostream>
-#include <fstream>
+#include <ranges>
 
 namespace utility
 {
-	struct StructScene
+	/*struct StructScene
 		{
 			enum EnumScene : std::uint8_t { Menu, Cities ,Cinemas, ExitEnum };
 
 			EnumScene currentScene = Menu;
 		};
 
-	extern StructScene scene;
+	extern StructScene scene;*/
+
 	void clearScreen();
 	void displayTitleGraphic(const std::string& file_link);
 	void displayDate(std::chrono::year_month_day dateYearMonthDay);
@@ -44,7 +43,11 @@ namespace utility
     }
 
     bool fileExists(const std::string& filePath);
+
     bool vectorLinearSearch(std::vector<int>& vec, int& target);
-    bool vectorLinearSearch2D(const std::vector<std::vector<int>>& vec, int target) {
-   
+    bool vectorLinearSearch2D(const std::vector<std::vector<int>>& vec, int target);
+	bool vectorLinearSearchRow2D(std::vector<std::vector<int>>&vec, int specificRow, int value);
+
+    bool removeFrom2DVectorRow(std::vector<std::vector<int>>& vec, int rowIndex, int value);
+
 }

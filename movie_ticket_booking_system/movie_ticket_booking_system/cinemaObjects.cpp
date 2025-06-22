@@ -1,5 +1,6 @@
 #include <chrono>
 #include "cinemaObjects.h"
+#include <iostream>
 #include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -79,9 +80,18 @@ m_projectionMovie(movie), m_startingTime(startingTime)
 	{
 		for (size_t cols = 0; cols < SEAT_PLAN_COLS; cols++)
 		{
-			m_seats[rows][cols] = false;
+			m_seats.at(rows).at(cols) = false;
 		}
 	}
+}
+
+bool MovieProjection::checkSeatAvailability(int& selectedRow, int& selectedCol) const
+{
+	if (m_seats.at(selectedRow - 1).at(selectedCol - 1) == true)
+	{
+		return true; // Seat is already booked
+	}
+	return false; // Seat is available
 }
 
 bool MovieProjection::bookTicket(int row, int col)

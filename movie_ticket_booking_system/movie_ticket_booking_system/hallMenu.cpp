@@ -1,8 +1,11 @@
+#include <iostream>
+
 #include "menus.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"
 #include "cinemaObjects.h"
 #include "definitions.h"
+#include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
 void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
@@ -31,7 +34,7 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 		{
 		case 1:
 			utility::clearScreen();
-			// selectMovieProjection(currentHall, currentCinema, currentCity); // <--- DOING THIS NOW
+			selectMovieProjection(currentHall, currentCinema, currentCity);
 			break;
 		case 2:
 			utility::clearScreen();
