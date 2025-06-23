@@ -4,6 +4,9 @@
 #include <fstream>
 #include <iostream>
 #include "loadObjectData.h"
+#include <thread>
+#include <chrono>
+
 
 //Cities vector create and save functions
 
@@ -24,6 +27,7 @@ void createNewCity()
 		std::cout << "City #" << temp + 1 <<": " << cities[temp].getCityName() << '\n';
 	}
     saveCitiesToFile(cities);
+    std::this_thread::sleep_for(std::chrono::seconds(3));
 }
 
 bool saveCitiesToFile(const std::vector<City>& cities)
@@ -93,14 +97,17 @@ if (confirm == 'y' || confirm == 'Y')
 
        if (saveCitiesToFile(cities)) {
            std::cout << "Cinema created and saved successfully!" << '\n';
+           std::this_thread::sleep_for(std::chrono::seconds(3));
        }
        else {
            std::cerr << "Error: Cinema was created but not saved to file." << '\n';
+           std::this_thread::sleep_for(std::chrono::seconds(3));
        }
 }
 else
 {
 	std::cout << "Cinema creation cancelled." << '\n';
+    std::this_thread::sleep_for(std::chrono::seconds(2));
 }
 }
 
@@ -134,14 +141,17 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
 
         if (saveCitiesToFile(cities)) {
             std::cout << "Hall created and saved successfully!" << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(3));
         }
         else {
             std::cerr << "Error: Hall was created but not saved to file." << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(4));
         }
     }
     else
     {
         std::cout << "Hall creation cancelled." << '\n';
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 }
 
@@ -180,9 +190,11 @@ void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& current
 
    if (saveCitiesToFile(cities)) {
        std::cout << "Movie projection changes were saved successfully!" << '\n';
+       std::this_thread::sleep_for(std::chrono::seconds(3));
    }
    else {
        std::cerr << "Error: Movie projection changes were not saved to file." << '\n';
+       std::this_thread::sleep_for(std::chrono::seconds(4));
    }
 }
 
@@ -199,11 +211,13 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 		if (movieName == "CANCEL MOVIE")
 		{
 			std::cout << "Movie projection creation cancelled." << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(3));
 			return;
 		}
         else if (movieName.empty() || !utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"))
 		{
 			std::cerr << "Error: Movie name is empty or it does not exist." << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(4));
 		}
 
     } while (!utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"));
@@ -228,6 +242,7 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 	else
 	{
 		std::cout << "Movie projection creation cancelled." << '\n';
+        std::this_thread::sleep_for(std::chrono::seconds(3));
 		return;
 	} 
 }
@@ -254,6 +269,8 @@ void addNewMovie()
         std::cin >> year >> month >> day;
         if (!utility::isValidDate(year, month, day)) {
             std::cout << "Invalid date. Please try again." << '\n';
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     } while (!utility::isValidDate(year, month, day));
     std::chrono::year_month_day movieReleaseDate{
@@ -281,20 +298,24 @@ void addNewMovie()
 		if (!outFile)
 		{
 			std::cerr << "Error: Unable to open file for writing." << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(4));
 			return;
 		}
 		if (!newMovie.saveToFile(outFile))
 		{
 			std::cerr << "Error: Failed to save movie to file." << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(4));
 			outFile.close();
 			return;
 		}
 		outFile.close();
 		std::cout << "Movie saved successfully!" << '\n';
+        std::this_thread::sleep_for(std::chrono::seconds(2));
 	}
 	else
 	{
 		std::cout << "Movie creation cancelled." << '\n';
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
 	}
 }

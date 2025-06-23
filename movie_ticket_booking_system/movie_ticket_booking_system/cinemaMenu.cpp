@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "menus.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"
@@ -41,11 +40,13 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 		case 2:
 			utility::clearScreen();
 			createNewHall(currentCinema, currentCity);
+			utility::clearScreen();
 
 			break;
 		case 3:
 			utility::clearScreen();
 			std::cout << "This feature is not implemented yet." << '\n'; //Add later
+			utility::clearScreen();
 
 			break;
 		case 4:

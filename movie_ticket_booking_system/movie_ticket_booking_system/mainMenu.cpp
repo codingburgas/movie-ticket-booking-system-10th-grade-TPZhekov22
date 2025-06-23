@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <thread>
 #include "selectPlace.h"
 #include "definitions.h"
+#include "createNewObjects.h"
 #include "../system_static_library/namespaceUtility.h"
 
 void mainMenu()
@@ -10,7 +12,8 @@ void mainMenu()
 	utility::displayTitleGraphic("../assets/titleGraphics/mainMenuTitleGraphic.txt");
 
 	std::cout << "1: Select City" << '\n';
-	std::cout << "2: Exit" << '\n';
+	std::cout << "2: Add new movie" << '\n';
+	std::cout << "3: Exit" << '\n';
 	int mainMenuOption;
 	do {
 		std::cin >> mainMenuOption;
@@ -27,8 +30,16 @@ void mainMenu()
 		utility::clearScreen();
 		selectCity();
 		break;
-
+		
 	case 2:
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		utility::clearScreen();
+		addNewMovie();
+		utility::clearScreen();
+
+		break;
+	case 3:
 		utility::clearScreen();
 
 		std::cout << "Exiting..." << '\n';

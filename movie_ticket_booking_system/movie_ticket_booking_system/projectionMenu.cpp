@@ -101,7 +101,7 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 							std::this_thread::sleep_for(std::chrono::seconds(3));
 						}
 						else if (currentMovieProjection.checkSeatAvailability(selectedRow - 1, selectedCol - 1))
-						//If this function doesn't work, check if the indexing is correct
+						
 						{
 							std::cout << "This seat has already been booked and is unavailable." << '\n';
 							std::this_thread::sleep_for(std::chrono::seconds(3));

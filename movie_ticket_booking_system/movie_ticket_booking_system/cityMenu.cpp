@@ -38,6 +38,7 @@ void cityMenu(City& currentCity)
 		case 2:
 			utility::clearScreen();
 			createNewCinema(currentCity);
+			utility::clearScreen();
 
 			break;
 		case 3:

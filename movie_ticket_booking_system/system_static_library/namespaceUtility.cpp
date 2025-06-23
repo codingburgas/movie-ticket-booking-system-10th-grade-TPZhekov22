@@ -120,7 +120,4 @@ namespace utility
 			return false;
 		}
 	}
-
-
-
 }

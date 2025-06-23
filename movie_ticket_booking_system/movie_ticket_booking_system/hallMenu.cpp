@@ -39,10 +39,14 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 		case 2:
 			utility::clearScreen();
 			createNewMovieProjection(currentHall, currentCinema, currentCity);
+			utility::clearScreen();
+
 			break;
 		case 3:
 			utility::clearScreen();
 			// deleteMovieProjection(currentHall, currentCinema, currentCity); // Add later
+			utility::clearScreen();
+
 			break;
 		case 4:
 			utility::clearScreen();
