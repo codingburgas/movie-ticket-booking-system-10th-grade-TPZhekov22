@@ -3,11 +3,9 @@
 #include "../system_static_library/namespaceUtility.h"
 #include "cinemaObjects.h"
 #include "definitions.h"
-#include "menus.h"
 #include <vector>
 #include <thread>
 #include <chrono>
-
 #include "createNewObjects.h"
 
 void selectSeatToBook(std::vector<std::vector<int>>& selectedSeats, MovieProjection& currentMovieProjection)
@@ -23,7 +21,8 @@ void selectSeatToBook(std::vector<std::vector<int>>& selectedSeats, MovieProject
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	} while ((selectedRow < MIN_MENU_CHOICES || selectedRow > SEAT_PLAN_ROWS) && selectedRow != 1234);
+	}
+	while ((selectedRow < MIN_MENU_CHOICES || selectedRow > SEAT_PLAN_ROWS) && selectedRow != 1234);
 
 	if (selectedRow != 1234)
 	{
@@ -41,7 +40,8 @@ void selectSeatToBook(std::vector<std::vector<int>>& selectedSeats, MovieProject
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-		} while ((selectedCol < MIN_MENU_CHOICES || selectedCol > SEAT_PLAN_ROWS) && selectedCol != 1234);
+		}
+		while ((selectedCol < MIN_MENU_CHOICES || selectedCol > SEAT_PLAN_ROWS) && selectedCol != 1234);
 		if (selectedCol != 1234)
 		{
 			if (utility::vectorLinearSearchRow2D(selectedSeats, selectedRow - 1, selectedCol - 1))
@@ -82,7 +82,8 @@ void unselectSeatToBook(std::vector<std::vector<int>>& selectedSeats)
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	} while ((cancelRow < MIN_MENU_CHOICES || cancelRow > SEAT_PLAN_ROWS) && cancelRow != 1234);
+	}
+	while ((cancelRow < MIN_MENU_CHOICES || cancelRow > SEAT_PLAN_ROWS) && cancelRow != 1234);
 
 	if (cancelRow != 1234)
 	{
@@ -100,7 +101,8 @@ void unselectSeatToBook(std::vector<std::vector<int>>& selectedSeats)
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-		} while ((cancelCol < MIN_MENU_CHOICES || cancelCol > SEAT_PLAN_ROWS) && cancelCol != 1234);
+		}
+		while ((cancelCol < MIN_MENU_CHOICES || cancelCol > SEAT_PLAN_ROWS) && cancelCol != 1234);
 		if (cancelCol != 1234)
 		{
 			utility::removeFrom2DVectorRow(selectedSeats, cancelRow - 1, cancelCol - 1);
@@ -113,7 +115,8 @@ void unselectSeatToBook(std::vector<std::vector<int>>& selectedSeats)
 	}
 }
 
-void purchaseTicket(std::vector<std::vector<int>>& selectedSeats, MovieProjection& currentMovieProjection, Hall& currentHall, Cinema& currentCinema, City& currentCity)
+void purchaseTicket(std::vector<std::vector<int>>& selectedSeats, MovieProjection& currentMovieProjection,
+                    Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	std::cout << '\n';
 	if (selectedSeats.empty() || utility::is2DVectorEmpty(selectedSeats))
@@ -186,14 +189,17 @@ void purchaseTicket(std::vector<std::vector<int>>& selectedSeats, MovieProjectio
 		do
 		{
 			std::cin >> creditCardNumber;
-			if (creditCardNumber.length() > 16 || creditCardNumber.length() < 15 || !std::ranges::all_of(creditCardNumber, ::isdigit))
+			if (creditCardNumber.length() > 16 || creditCardNumber.length() < 15 || !std::ranges::all_of(
+				creditCardNumber, isdigit))
 			{
 				std::cout << "Invalid credit card number. Please input a valid credit card number: ";
 				std::cout << '\n';
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-		} while (creditCardNumber.length() > 16 || creditCardNumber.length() < 15 || !std::ranges::all_of(creditCardNumber, ::isdigit));
+		}
+		while (creditCardNumber.length() > 16 || creditCardNumber.length() < 15 || !std::ranges::all_of(
+			creditCardNumber, isdigit));
 		std::cout << '\n';
 
 		std::cin.clear();
@@ -215,9 +221,7 @@ void purchaseTicket(std::vector<std::vector<int>>& selectedSeats, MovieProjectio
 				}
 			}
 			saveMovieProjection(currentHall, currentCinema, currentCity, currentMovieProjection);
-			std::cout << "Tickets purchased successfully!" << '\n';
-			std::cout << '\n';
-			std::cout << "Ticket:" << '\n';
+			utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/ticketMenuTitleGraphic.txt");
 			std::cout << "-------------------------------------------------" << '\n';
 			std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
 			std::cout << "Movie: " << currentMovieProjection.getProjectionMovieTitle() << '\n';
@@ -237,6 +241,8 @@ void purchaseTicket(std::vector<std::vector<int>>& selectedSeats, MovieProjectio
 			std::cout << "-------------------------------------------------" << '\n';
 			std::cout << '\n';
 			std::cout << "Total price: " << sum << " BGN" << '\n';
+			std::cout << '\n';
+			std::cout << "Tickets purchased successfully!" << '\n';
 			std::cout << "Thank you for your purchase!" << '\n';
 			std::cout << '\n';
 			std::cout << "Enter any key to continue..." << '\n';

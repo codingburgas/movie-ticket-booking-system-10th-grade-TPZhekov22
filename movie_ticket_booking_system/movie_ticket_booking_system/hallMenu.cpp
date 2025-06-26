@@ -2,9 +2,7 @@
 #include <thread>
 #include "menus.h"
 #include "createNewObjects.h"
-#include "loadObjectData.h"
 #include "cinemaObjects.h"
-#include "definitions.h"
 #include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -12,10 +10,9 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/hallMenuTitleGraphic.txt");
+		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/hallMenuTitleGraphic.txt");
 		// Add title graphic later "Hall Menu"
 		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
-		std::cout << '\n';
 		currentHall.displayProjectionCalendar();
 		std::cout << "---------------------------------------" << '\n';
 		std::cout << "1: Select a movie projection" << '\n';

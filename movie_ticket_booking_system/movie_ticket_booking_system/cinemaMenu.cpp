@@ -2,9 +2,7 @@
 #include <thread>
 #include "menus.h"
 #include "createNewObjects.h"
-#include "loadObjectData.h"
 #include "cinemaObjects.h"
-#include "definitions.h"
 #include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -12,7 +10,7 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
+		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/cinemaMenuTitleGraphic.txt");
 		// Add title graphic later "Cinema Menu"
 		std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
 		std::cout << '\n';

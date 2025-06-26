@@ -3,13 +3,12 @@
 #include <string>
 #include <thread>
 #include "selectPlace.h"
-#include "definitions.h"
 #include "createNewObjects.h"
 #include "../system_static_library/namespaceUtility.h"
 
 void mainMenu()
 {
-	utility::displayTitleGraphic("../assets/titleGraphics/mainMenuTitleGraphic.txt");
+	utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/mainMenuTitleGraphic.txt");
 
 	std::cout << "1: Select City" << '\n';
 	std::cout << "2: Add new movie" << '\n';
@@ -24,7 +23,7 @@ void mainMenu()
 		utility::clearScreen();
 		selectCity();
 		break;
-		
+
 	case 2:
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

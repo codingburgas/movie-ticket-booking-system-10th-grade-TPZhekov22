@@ -16,7 +16,7 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 		selectedSeats.resize(SEAT_PLAN_ROWS);
 		do
 		{
-			utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
+			utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/projectionMenuTitleGraphic.txt");
 			// Add title graphic later "MOVIE PROJECTION MENU"
 			std::cout << "Movie projection: " << currentMovieProjection.getProjectionMovieTitle() << '\n';
 			std::cout << "Genre: " << currentMovieProjection.getProjectionMovieGenre() << '\n';
@@ -62,7 +62,8 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 				break;
 			case 3:
 				purchaseTicket(selectedSeats, currentMovieProjection, currentHall, currentCinema, currentCity);
-				for (auto& row : selectedSeats) {
+				for (auto& row : selectedSeats)
+				{
 					row.clear();
 				}
 
@@ -83,6 +84,8 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 				utility::clearScreen();
 				break;
 			}
-		} while (utility::exit == false);
-	} while (utility::exit == false);
+		}
+		while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

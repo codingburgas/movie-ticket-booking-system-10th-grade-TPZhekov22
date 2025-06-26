@@ -3,7 +3,6 @@
 #include "../system_static_library/namespaceUtility.h"
 #include "cinemaObjects.h"
 #include "createNewObjects.h"
-#include "definitions.h"
 #include "menus.h"
 #include "selectPlace.h"
 
@@ -11,7 +10,7 @@ void cityMenu(City& currentCity)
 {
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
+		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/cityMenuTitleGraphic.txt");
 		std::cout << "City: " << currentCity.getCityName() << '\n';
 		std::cout << '\n';
 		currentCity.displayCinemas();
@@ -22,7 +21,7 @@ void cityMenu(City& currentCity)
 
 		int selectedCinemaOption;
 		std::cin >> selectedCinemaOption;
-		
+
 		switch (selectedCinemaOption)
 		{
 		case 1:
@@ -50,6 +49,6 @@ void cityMenu(City& currentCity)
 			utility::clearScreen();
 			break;
 		}
-
-	} while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

@@ -5,7 +5,7 @@
 #include "../system_static_library/namespaceUtility.h"
 
 // Movie class implementation
-Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,const std::string& movieLanguage)
+Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate, const std::string& movieLanguage)
 	: m_title(movieTitle), m_genre(movieGenre), m_releaseDate(movieDate), m_language(movieLanguage)
 {
 }
@@ -20,7 +20,7 @@ const std::string& Movie::getTitle() const
 	return m_title;
 }
 
-std::chrono::year_month_day Movie::getReleaseDate() const 
+std::chrono::year_month_day Movie::getReleaseDate() const
 {
 	return m_releaseDate;
 }
@@ -30,7 +30,8 @@ const std::string& Movie::getLanguage() const
 	return m_language;
 }
 
-bool Movie::saveToFile(std::ostream& os) const {
+bool Movie::saveToFile(std::ostream& os) const
+{
 	int year = static_cast<int>(m_releaseDate.year());
 	unsigned month = static_cast<unsigned>(m_releaseDate.month());
 	unsigned day = static_cast<unsigned>(m_releaseDate.day());
@@ -42,7 +43,8 @@ bool Movie::saveToFile(std::ostream& os) const {
 		&& utility::writeString(os, m_language);
 }
 
-std::optional<Movie> Movie::loadFromFile(std::istream& is) {
+std::optional<Movie> Movie::loadFromFile(std::istream& is)
+{
 	std::string title, genre, language;
 	int year;
 	unsigned month, day;
@@ -63,7 +65,7 @@ std::optional<Movie> Movie::loadFromFile(std::istream& is) {
 
 // MovieProjection class implementation
 MovieProjection::MovieProjection(const Movie movie, int startingTime):
-m_projectionMovie(movie), m_startingTime(startingTime)
+	m_projectionMovie(movie), m_startingTime(startingTime)
 {
 	int tempTime = startingTime;
 	while (tempTime < 0 || tempTime > 23)
@@ -125,66 +127,70 @@ void MovieProjection::setProjectionTime(int projectionStartTime)
 	this->m_startingTime = tempTime;
 }
 
-void MovieProjection::displaySeatPlan() const  
+void MovieProjection::displaySeatPlan() const
 {
-	std::cout << "Seats from Row 1 to " << PLATINUM_SEAT_ROW_LIMIT << " are platinum seats. Cost: " << PLATINUM_SEAT_PRICE << " BGN" << '\n';
-	std::cout << "Seats from Row " << PLATINUM_SEAT_ROW_LIMIT + 1 << " to " << GOLD_SEAT_ROW_LIMIT << " are gold seats. Cost: " << GOLD_SEAT_PRICE << " BGN" << '\n';
-	std::cout << "Seats from Row " << GOLD_SEAT_ROW_LIMIT + 1 << " to " << SEAT_PLAN_ROWS << " are silver seats. Cost: " << SILVER_SEAT_PRICE << " BGN" << '\n';
+	std::cout << "Seats from Row 1 to " << PLATINUM_SEAT_ROW_LIMIT << " are platinum seats. Cost: " <<
+		PLATINUM_SEAT_PRICE << " BGN" << '\n';
+	std::cout << "Seats from Row " << PLATINUM_SEAT_ROW_LIMIT + 1 << " to " << GOLD_SEAT_ROW_LIMIT <<
+		" are gold seats. Cost: " << GOLD_SEAT_PRICE << " BGN" << '\n';
+	std::cout << "Seats from Row " << GOLD_SEAT_ROW_LIMIT + 1 << " to " << SEAT_PLAN_ROWS << " are silver seats. Cost: "
+		<< SILVER_SEAT_PRICE << " BGN" << '\n';
 	std::cout << '\n';
-   std::cout << "'X' - the seat is already taken" << '\n';
-   std::cout << "'0' - the seat is available" << '\n';
-   std::cout << '\n';
-   std::cout << "                                          SCREEN" << '\n';
-   std::cout << " _________________________________________________________________________________________" << '\n';
-   std::cout << " |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << '\n'; //49
-   std::cout << " -----------------------------------------------------------------------------------------" << '\n';
-   std::cout << '\n';
+	std::cout << "'X' - the seat is already taken" << '\n';
+	std::cout << "'0' - the seat is available" << '\n';
+	std::cout << '\n';
+	std::cout << "                                          SCREEN" << '\n';
+	std::cout << " _________________________________________________________________________________________" << '\n';
+	std::cout << " |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << '\n';
+	//49
+	std::cout << " -----------------------------------------------------------------------------------------" << '\n';
+	std::cout << '\n';
 
-   // Print top border
-   std::cout << "             ";
-   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
-   {
-	   std::cout << " -----";
-   }
-   std::cout << '\n';
+	// Print top border
+	std::cout << "             ";
+	for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+	{
+		std::cout << " -----";
+	}
+	std::cout << '\n';
 
-   for (size_t row = 0; row < SEAT_PLAN_ROWS; row++)
-   {
-	   // Print row number (1-based, aligned)
-	   std::cout << "         " << (row + 1 < 10 ? " " : "") << row + 1 << "  ";
-	   // First line: seat symbol
-	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
-	   {
-		   std::cout << "|  ";
-		   if (m_seats[row][col])
-			   std::cout << "X";
-		   else
-			   std::cout << "0";
-		   std::cout << "  ";
-	   }
-	   std::cout << "|" << '\n';
+	for (size_t row = 0; row < SEAT_PLAN_ROWS; row++)
+	{
+		// Print row number (1-based, aligned)
+		std::cout << "         " << (row + 1 < 10 ? " " : "") << row + 1 << "  ";
+		// First line: seat symbol
+		for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+		{
+			std::cout << "|  ";
+			if (m_seats[row][col])
+				std::cout << "X";
+			else
+				std::cout << "0";
+			std::cout << "  ";
+		}
+		std::cout << "|" << '\n';
 
-	   // Second line: column number
-	   std::cout << "             ";
-	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
-	   {
-		   // Center the column number
-		   int colNum = static_cast<int>(col) + 1;
-		   if (colNum < 10)
-			   std::cout << "|  " << colNum << "  ";
-		   else
-			   std::cout << "| " << colNum << "  ";
-	   }
-	   std::cout << "|" << '\n';
+		// Second line: column number
+		std::cout << "             ";
+		for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+		{
+			// Center the column number
+			int colNum = static_cast<int>(col) + 1;
+			if (colNum < 10)
+				std::cout << "|  " << colNum << "  ";
+			else
+				std::cout << "| " << colNum << "  ";
+		}
+		std::cout << "|" << '\n';
 
-	   // Print bottom border of boxes
-	   std::cout << "             ";
-	   for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
-	   {
-		   std::cout << " -----";
-	   }
-	   std::cout << '\n';
-   }
+		// Print bottom border of boxes
+		std::cout << "             ";
+		for (size_t col = 0; col < SEAT_PLAN_COLS; col++)
+		{
+			std::cout << " -----";
+		}
+		std::cout << '\n';
+	}
 }
 
 int MovieProjection::getProjectionTime() const
@@ -471,14 +477,14 @@ void City::addCinema(Cinema& cinema)
 	m_cinemas.push_back(cinema);
 }
 
-void City::displayCinemas() const  
-{  
-   int cinemaNumber = 1;  
-   for (const auto& cinema : m_cinemas)  
-   {  
-       std::cout << "Cinema " << cinemaNumber << ": " << cinema.getCinemaName() << '\n';  
-       cinemaNumber++;  
-   }  
+void City::displayCinemas() const
+{
+	int cinemaNumber = 1;
+	for (const auto& cinema : m_cinemas)
+	{
+		std::cout << "Cinema " << cinemaNumber << ": " << cinema.getCinemaName() << '\n';
+		cinemaNumber++;
+	}
 }
 
 size_t City::numberOfCinemas() const
