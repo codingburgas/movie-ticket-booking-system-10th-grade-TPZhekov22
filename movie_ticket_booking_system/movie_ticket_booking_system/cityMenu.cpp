@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include "../system_static_library/namespaceUtility.h"
 #include "cinemaObjects.h"
 #include "createNewObjects.h"
@@ -18,15 +19,10 @@ void cityMenu(City& currentCity)
 		std::cout << "1: Select a cinema" << '\n';
 		std::cout << "2: Create new cinema" << '\n';
 		std::cout << "3: Go back" << '\n';
+
 		int selectedCinemaOption;
-		do {
-			std::cin >> selectedCinemaOption;
-			if (selectedCinemaOption < MIN_MENU_CHOICES || selectedCinemaOption > CITY_MENU_MAX_CHOICES) {
-				std::cout << "Invalid option" << '\n';
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-		} while (selectedCinemaOption < MIN_MENU_CHOICES || selectedCinemaOption > CITY_MENU_MAX_CHOICES);
+		std::cin >> selectedCinemaOption;
+		
 		switch (selectedCinemaOption)
 		{
 		case 1:
@@ -46,6 +42,14 @@ void cityMenu(City& currentCity)
 
 			return;
 			break;
+		default:
+			std::cout << "Invalid option" << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			utility::clearScreen();
+			break;
 		}
+
 	} while (utility::exit == false);
 }

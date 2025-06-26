@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <thread>
 #include "menus.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"
@@ -12,7 +12,8 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/hallMenuTitleGraphic.txt"); // Add title graphic later "Hall Menu"
+		utility::displayTitleGraphic("../assets/titleGraphics/hallMenuTitleGraphic.txt");
+		// Add title graphic later "Hall Menu"
 		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
 		std::cout << '\n';
 		currentHall.displayProjectionCalendar();
@@ -21,15 +22,10 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 		std::cout << "2: Add new movie projection" << '\n';
 		std::cout << "3: Delete movie projection" << '\n'; //Add later, when done with menus
 		std::cout << "4: Go back" << '\n';
+
 		size_t hallMenuOption;
-		do {
-			std::cin >> hallMenuOption;
-			if (hallMenuOption < MIN_MENU_CHOICES || hallMenuOption > HALL_MENU_MAX_CHOICES) {
-				std::cout << "Invalid option" << '\n';
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-		} while (hallMenuOption < MIN_MENU_CHOICES || hallMenuOption > HALL_MENU_MAX_CHOICES);
+		std::cin >> hallMenuOption;
+
 		switch (hallMenuOption)
 		{
 		case 1:
@@ -44,7 +40,7 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 			break;
 		case 3:
 			utility::clearScreen();
-			// deleteMovieProjection(currentHall, currentCinema, currentCity); // Add later
+		// deleteMovieProjection(currentHall, currentCinema, currentCity); // Add later
 			utility::clearScreen();
 
 			break;
@@ -52,6 +48,14 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 			utility::clearScreen();
 			return;
 			break;
+		default:
+			std::cout << "Invalid option" << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			utility::clearScreen();
+			break;
 		}
-	} while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

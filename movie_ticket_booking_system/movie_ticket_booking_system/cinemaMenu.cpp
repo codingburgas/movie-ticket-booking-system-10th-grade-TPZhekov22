@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include "menus.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"
@@ -11,7 +12,8 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt"); // Add title graphic later "Cinema Menu"
+		utility::displayTitleGraphic("../assets/titleGraphics/cityMenuTitleGraphic.txt");
+		// Add title graphic later "Cinema Menu"
 		std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
 		std::cout << '\n';
 		currentCinema.displayMovies();
@@ -20,21 +22,16 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 		std::cout << "2: Create new hall" << '\n';
 		std::cout << "3: Delete hall" << '\n'; //Add later, when done with menus
 		std::cout << "4: Go back" << '\n';
+
 		size_t cinemaMenuOption;
-		do {
-			std::cin >> cinemaMenuOption;
-			if (cinemaMenuOption < MIN_MENU_CHOICES || cinemaMenuOption > CINEMA_MENU_MAX_CHOICES) {
-				std::cout << "Invalid option" << '\n';
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-		} while (cinemaMenuOption < MIN_MENU_CHOICES || cinemaMenuOption > CINEMA_MENU_MAX_CHOICES);
+		std::cin >> cinemaMenuOption;
+
 		switch (cinemaMenuOption)
 		{
 		case 1:
 			utility::clearScreen();
 			selectHall(currentCinema, currentCity);
-			
+
 			break;
 
 		case 2:
@@ -54,6 +51,14 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 
 			return;
 			break;
+		default:
+			std::cout << "Invalid option" << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			utility::clearScreen();
+			break;
 		}
-	} while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

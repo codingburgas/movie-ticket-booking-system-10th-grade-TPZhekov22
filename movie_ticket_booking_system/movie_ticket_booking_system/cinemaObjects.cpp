@@ -106,7 +106,7 @@ bool MovieProjection::bookTicket(int row, int col)
 		std::cout << "Seat already booked." << '\n';
 		return false;
 	}
-	m_seats[row][col] = true;
+	m_seats.at(row).at(col) = true;
 	return true;
 }
 
@@ -127,6 +127,10 @@ void MovieProjection::setProjectionTime(int projectionStartTime)
 
 void MovieProjection::displaySeatPlan() const  
 {
+	std::cout << "Seats from Row 1 to " << PLATINUM_SEAT_ROW_LIMIT << " are platinum seats. Cost: " << PLATINUM_SEAT_PRICE << " BGN" << '\n';
+	std::cout << "Seats from Row " << PLATINUM_SEAT_ROW_LIMIT + 1 << " to " << GOLD_SEAT_ROW_LIMIT << " are gold seats. Cost: " << GOLD_SEAT_PRICE << " BGN" << '\n';
+	std::cout << "Seats from Row " << GOLD_SEAT_ROW_LIMIT + 1 << " to " << SEAT_PLAN_ROWS << " are silver seats. Cost: " << SILVER_SEAT_PRICE << " BGN" << '\n';
+	std::cout << '\n';
    std::cout << "'X' - the seat is already taken" << '\n';
    std::cout << "'0' - the seat is available" << '\n';
    std::cout << '\n';

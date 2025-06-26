@@ -13,7 +13,7 @@ void createNewCinema(City& currentCity);
 void createNewHall(Cinema& currentCinema, City& currentCity);
 
 //MovieProjection create and save function
-void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, const MovieProjection& updatedProjection);
+void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, MovieProjection& updatedProjection);
 void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity);
 
 //Movie create and save function

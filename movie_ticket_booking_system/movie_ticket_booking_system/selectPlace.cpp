@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <thread>
+
 #include "createNewObjects.h"
 #include "loadObjectData.h"
 #include "definitions.h"
@@ -120,19 +122,22 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		currentHall.displayProjectionCalendar();
 		std::cout << currentHall.numberOfProjections() + 1 << ": Go back" << '\n';
 		std::cout << "---------------------------------------" << '\n';
+
 		size_t selectedProjectionOption;
-		do {
-			std::cin >> selectedProjectionOption;
-			if (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1) {
-				std::cout << "Invalid option" << '\n';
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-		} while (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1);
+		std::cin >> selectedProjectionOption;
+
 		if (selectedProjectionOption == currentHall.numberOfProjections() + 1)
 		{
 			utility::clearScreen();
 			return;
+		}
+		else if (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1)
+		{
+			std::cout << "Invalid option" << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::milliseconds(650));
+			utility::clearScreen();
 		}
 		else
 		{

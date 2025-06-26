@@ -156,7 +156,7 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
 }
 
 // Movie Projection create and save functions
-void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, const MovieProjection& updatedProjection)
+void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, MovieProjection& updatedProjection)
 {
    for (auto& projection : currentHall.getProjectionPlan()) {
        if (projection.getProjectionTime() == updatedProjection.getProjectionTime()) {
@@ -279,7 +279,6 @@ void addNewMovie()
         std::chrono::day{static_cast<unsigned int>(day)}
     };
 
-	
 
 	Movie newMovie(movieTitle, movieGenre, movieReleaseDate, movieLanguage);
 

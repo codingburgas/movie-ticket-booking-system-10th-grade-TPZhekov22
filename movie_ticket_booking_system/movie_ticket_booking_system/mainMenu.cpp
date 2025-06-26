@@ -14,15 +14,9 @@ void mainMenu()
 	std::cout << "1: Select City" << '\n';
 	std::cout << "2: Add new movie" << '\n';
 	std::cout << "3: Exit" << '\n';
+
 	int mainMenuOption;
-	do {
-		std::cin >> mainMenuOption;
-		if (mainMenuOption < MIN_MENU_CHOICES || mainMenuOption > MAIN_MENU_MAX_CHOICES) {
-			std::cout << "Invalid option" << '\n';
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		}
-	} while (mainMenuOption < MIN_MENU_CHOICES || mainMenuOption > MAIN_MENU_MAX_CHOICES);
+	std::cin >> mainMenuOption;
 
 	switch (mainMenuOption)
 	{
@@ -44,6 +38,13 @@ void mainMenu()
 
 		std::cout << "Exiting..." << '\n';
 		utility::exit = true;
+		break;
+	default:
+		std::cout << "Invalid option" << '\n';
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::this_thread::sleep_for(std::chrono::milliseconds(650));
+		utility::clearScreen();
 		break;
 	}
 }
