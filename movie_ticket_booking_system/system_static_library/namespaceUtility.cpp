@@ -5,6 +5,7 @@
 #include <fstream>
 #include <ranges>
 #include <algorithm>
+#include <filesystem>
 
 namespace utility
 {
@@ -127,5 +128,16 @@ namespace utility
 			return true;
 		}
 		return false;
+	}
+
+	void listAvailableMovies()
+	{
+		for (const auto& entry : std::filesystem::directory_iterator("../assets/objectData/movieObjects/"))
+		{
+			if (entry.path().extension() == ".bin")
+			{
+				std::cout << "- " << entry.path().stem().string() << '\n';
+			}
+		}
 	}
 }

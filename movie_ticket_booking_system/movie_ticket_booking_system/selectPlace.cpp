@@ -1,4 +1,6 @@
 #include "selectPlace.h"
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <thread>
 #include "createNewObjects.h"
@@ -12,8 +14,7 @@ void selectCity()
 	std::vector<City> cities = loadCitiesFromFile();
 	do
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectCityTitleGraphic.txt"); //Add title graphic later
-
+		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectCityTitleGraphic.txt");
 
 		for (size_t numOfCity = 0; numOfCity < cities.size(); numOfCity++)
 		{
@@ -49,7 +50,6 @@ void selectCinema(City& currentCity)
 	do
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectCinemaTitleGraphic.txt");
-		// Add title graphic later "SELECT A CINEMA"
 		std::cout << "City: " << currentCity.getCityName() << '\n';
 		std::cout << '\n';
 		currentCity.displayCinemas();
@@ -84,7 +84,6 @@ void selectHall(Cinema& currentCinema, City& currentCity)
 	do
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectHallTitleGraphic.txt");
-		// Add title graphic later "SELECT A HALL"
 		std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
 		std::cout << '\n';
 		currentCinema.displayMovies();
@@ -118,7 +117,6 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 	do
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectProjectionTitleGraphic.txt");
-		// Add title graphic later "SELECT A MOVIE PROJECTION"
 		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
 		currentHall.displayProjectionCalendar();
 		std::cout << currentHall.numberOfProjections() + 1 << ": Go back" << '\n';
@@ -143,8 +141,7 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		else
 		{
 			utility::clearScreen();
-			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema,
-			               currentCity);
+			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema, currentCity);
 		}
 	}
 	while (utility::exit == false);

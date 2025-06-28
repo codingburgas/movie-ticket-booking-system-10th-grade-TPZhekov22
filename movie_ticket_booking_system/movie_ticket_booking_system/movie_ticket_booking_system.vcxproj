@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="cinemaMenu.cpp" />
     <ClCompile Include="cityMenu.cpp" />
+    <ClCompile Include="deleteObjects.cpp" />
     <ClCompile Include="hallMenu.cpp" />
     <ClCompile Include="optionsProjectionMenu.cpp" />
     <ClCompile Include="projectionMenu.cpp" />
@@ -150,6 +151,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deleteObjects.h" />
     <ClInclude Include="optionsProjectionMenu.h" />
     <ClInclude Include="selectPlace.h" />
     <ClInclude Include="cinemaObjects.h" />

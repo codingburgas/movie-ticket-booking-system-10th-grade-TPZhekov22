@@ -11,7 +11,6 @@ void hallMenu(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 	do
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/hallMenuTitleGraphic.txt");
-		// Add title graphic later "Hall Menu"
 		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
 		currentHall.displayProjectionCalendar();
 		std::cout << "---------------------------------------" << '\n';

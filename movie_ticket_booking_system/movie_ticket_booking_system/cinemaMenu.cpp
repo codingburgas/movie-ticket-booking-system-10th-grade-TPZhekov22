@@ -11,7 +11,6 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 	do
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/cinemaMenuTitleGraphic.txt");
-		// Add title graphic later "Cinema Menu"
 		std::cout << "Cinema: " << currentCinema.getCinemaName() << '\n';
 		std::cout << '\n';
 		currentCinema.displayMovies();

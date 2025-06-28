@@ -53,4 +53,6 @@ namespace utility
 	bool removeFrom2DVectorRow(std::vector<std::vector<int>>& vec, int rowIndex, int value);
 
 	bool is2DVectorEmpty(std::vector<std::vector<int>>& vec);
+
+	void listAvailableMovies();
 }

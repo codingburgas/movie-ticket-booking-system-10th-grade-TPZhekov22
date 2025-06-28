@@ -17,7 +17,6 @@ void projectionMenu(MovieProjection& currentMovieProjection, Hall& currentHall, 
 		do
 		{
 			utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/projectionMenuTitleGraphic.txt");
-			// Add title graphic later "MOVIE PROJECTION MENU"
 			std::cout << "Movie projection: " << currentMovieProjection.getProjectionMovieTitle() << '\n';
 			std::cout << "Genre: " << currentMovieProjection.getProjectionMovieGenre() << '\n';
 			std::cout << "Release Date: " << currentMovieProjection.getProjectionMovieReleaseDate() << '\n';
