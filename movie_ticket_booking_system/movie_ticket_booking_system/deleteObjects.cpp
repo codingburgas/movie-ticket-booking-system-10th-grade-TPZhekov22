@@ -1,12 +1,80 @@
-#include "deleteObjects.h"
+#include <filesystem>
+#include <fstream>
+#include <thread>
 #include <iostream>
+#include "deleteObjects.h"
 #include "cinemaObjects.h"
 #include "createNewObjects.h"
 #include "loadObjectData.h"
 #include "../system_static_library/namespaceUtility.h"
-#include <filesystem>
-#include <fstream>
-#include <thread>
+
+// Hall deletion function
+void deleteHall(Cinema& currentCinema, City& currentCity)
+{
+	std::cout << '\n';
+	std::cout << "Select which hall you want to delete from this cinema or cancel by typing '12345': ";
+	int selectedHall;
+	std::cin >> selectedHall;
+
+	auto& halls = currentCinema.getHallsVector();
+	if (selectedHall == 12345)
+	{
+		std::cout << "Hall deletion cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+	selectedHall = selectedHall - 1; // Adjust for zero-based index
+	if (selectedHall < 0 || static_cast<size_t>(selectedHall) >= halls.size())
+	{
+		std::cerr << "Invalid hall index.\n";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+
+	std::cout << "WARNING: THIS ACTION WILL DELETE THE HALL '" << halls.at(selectedHall).getHallID()
+		<< "' FROM THE DATA FILES AND ALL THE MOVIE PROJECTIONS IN THIS HALL!!!" << '\n';
+	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?" << '\n';
+	std::cout << "Confirm deletion of the hall '" << halls.at(selectedHall).getHallID() << "'? (y/n): ";
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	char confirm;
+	std::cin >> confirm;
+	if (confirm != 'y' && confirm != 'Y')
+	{
+		std::cout << "Hall deletion cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+	halls.erase(halls.begin() + selectedHall);
+	currentCinema.recalibrateHallIDs();
+	std::vector<City> cities = loadCitiesFromFile();
+
+	for (auto& city : cities)
+	{
+		if (city.getCityName() == currentCity.getCityName())
+		{
+			for (auto& cinema : city.getCinemasVector())
+			{
+				if (cinema.getCinemaName() == currentCinema.getCinemaName())
+				{
+					cinema = currentCinema;
+				}
+			}
+		}
+	}
+	if (saveCitiesToFile(cities))
+	{
+		std::cout << "Movie projection deleted successfully.\n";
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+	}
+	else
+	{
+		std::cerr << "Error: Failed to save changes.\n";
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+	}
+}
 
 // Movie projection deletion function
 void deleteMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
@@ -15,27 +83,31 @@ void deleteMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 	std::cout << "Select which movie projection you want to delete from this hall or cancel by typing '12345': ";
 	int selectedProjection;
 	std::cin >> selectedProjection;
-	selectedProjection = selectedProjection - 1; // Adjust for zero-based index
 
 	auto& projections = currentHall.getProjectionPlan();
-	if (selectedProjection < 0 || static_cast<size_t>(selectedProjection) >= projections.size()) {
-		std::cerr << "Invalid projection index.\n";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		std::this_thread::sleep_for(std::chrono::seconds(2));
-		return;
-	}
 	if (selectedProjection == 12345)
 	{
 		std::cout << "Movie projection deletion cancelled." << '\n';
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		return;
 	}
+	selectedProjection = selectedProjection - 1; // Adjust for zero-based index
+	if (selectedProjection < 0 || static_cast<size_t>(selectedProjection) >= projections.size())
+	{
+		std::cerr << "Invalid projection index.\n";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
 
-	std::cout << "WARNING: THIS ACTION WILL DELETE THE MOVIE PROJECTION '" << projections.at(selectedProjection).getProjectionMovieTitle()
+
+	std::cout << "WARNING: THIS ACTION WILL DELETE THE MOVIE PROJECTION '" << projections.at(selectedProjection).
+		getProjectionMovieTitle()
 		<< "' FROM THE DATA FILES AND ALL THE TICKETS BOOKED FOR THIS PROJECTION!!!" << '\n';
 	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?" << '\n';
-	std::cout << "Confirm deletion of the movie projection '" << projections.at(selectedProjection).getProjectionMovieTitle() << "'? (y/n): ";
+	std::cout << "Confirm deletion of the movie projection '" << projections.at(selectedProjection).
+		getProjectionMovieTitle() << "'? (y/n): ";
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	char confirm;
@@ -50,12 +122,18 @@ void deleteMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 
 	projections.erase(projections.begin() + selectedProjection);
 	std::vector<City> cities = loadCitiesFromFile();
-	for (auto& city : cities) {
-		if (city.getCityName() == currentCity.getCityName()) {
-			for (auto& cinema : city.getCinemasVector()) {
-				if (cinema.getCinemaName() == currentCinema.getCinemaName()) {
-					for (auto& hall : cinema.getHallsVector()) {
-						if (hall.getHallID() == currentHall.getHallID()) {
+	for (auto& city : cities)
+	{
+		if (city.getCityName() == currentCity.getCityName())
+		{
+			for (auto& cinema : city.getCinemasVector())
+			{
+				if (cinema.getCinemaName() == currentCinema.getCinemaName())
+				{
+					for (auto& hall : cinema.getHallsVector())
+					{
+						if (hall.getHallID() == currentHall.getHallID())
+						{
 							hall = currentHall;
 						}
 					}
@@ -63,11 +141,13 @@ void deleteMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 			}
 		}
 	}
-	if (saveCitiesToFile(cities)) {
+	if (saveCitiesToFile(cities))
+	{
 		std::cout << "Movie projection deleted successfully.\n";
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 	}
-	else {
+	else
+	{
 		std::cerr << "Error: Failed to save changes.\n";
 		std::this_thread::sleep_for(std::chrono::seconds(3));
 	}
@@ -108,7 +188,7 @@ void removeMovie()
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	}while (!utility::isValidDate(year, month, day));
+	} while (!utility::isValidDate(year, month, day));
 
 	std::chrono::year_month_day movieReleaseDate{
 		std::chrono::year{year},
@@ -125,9 +205,10 @@ void removeMovie()
 		return;
 	}
 
-	std::cout << "WARNING: THIS ACTION WILL DELETE THE MOVIE '" << movieTitle << "' FROM THE DATA FILES AND ALL THE MOVIE PROJECTIONS WITH THAT MOVIE!!!" << '\n';
-	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?"  << '\n';
-	std::cout << "Confirm deletion of the movie '" << movieTitle <<"'? (y/n): ";
+	std::cout << "WARNING: THIS ACTION WILL DELETE THE MOVIE '" << movieTitle <<
+		"' FROM THE DATA FILES AND ALL THE MOVIE PROJECTIONS WITH THAT MOVIE!!!" << '\n';
+	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?" << '\n';
+	std::cout << "Confirm deletion of the movie '" << movieTitle << "'? (y/n): ";
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	char confirm;
@@ -172,9 +253,9 @@ void removeMovie()
 			{
 				auto& projections = hall.getProjectionPlan();
 				std::erase_if(projections, [&movieTitle](const MovieProjection& projection)
-				{
-					return projection.getProjectionMovieTitle() == movieTitle;
-				});
+					{
+						return projection.getProjectionMovieTitle() == movieTitle;
+					});
 			}
 		}
 	}

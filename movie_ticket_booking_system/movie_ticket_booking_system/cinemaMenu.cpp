@@ -3,6 +3,7 @@
 #include "menus.h"
 #include "createNewObjects.h"
 #include "cinemaObjects.h"
+#include "deleteObjects.h"
 #include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
@@ -17,7 +18,7 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 		std::cout << "---------------------------------------" << '\n';
 		std::cout << "1: Select a hall" << '\n';
 		std::cout << "2: Create new hall" << '\n';
-		std::cout << "3: Delete hall" << '\n'; //Add later, when done with menus
+		std::cout << "3: Delete hall" << '\n';
 		std::cout << "4: Go back" << '\n';
 
 		size_t cinemaMenuOption;
@@ -38,8 +39,7 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 
 			break;
 		case 3:
-			utility::clearScreen();
-			std::cout << "This feature is not implemented yet." << '\n'; //Add later
+			deleteHall(currentCinema, currentCity);
 			utility::clearScreen();
 
 			break;
@@ -56,6 +56,5 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 			utility::clearScreen();
 			break;
 		}
-	}
-	while (utility::exit == false);
+	} while (utility::exit == false);
 }

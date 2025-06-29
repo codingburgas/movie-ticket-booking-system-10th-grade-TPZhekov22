@@ -14,7 +14,7 @@ class Movie
 
 public:
 	Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
-	      const std::string& movieLanguage);
+		const std::string& movieLanguage);
 
 	const std::string& getTitle() const;
 	const std::string& getGenre() const;
@@ -58,15 +58,17 @@ class Hall
 {
 	int m_ID;
 	std::vector<MovieProjection> m_projectionPlan;
+	void sortProjectionsByTime(); // Sort the projections by time
 
 public:
 	Hall(int id);
 
 	bool addProjection(MovieProjection& movieProjection); // Add a projection to the hall
 	std::vector<MovieProjection>& getProjectionPlan(); // Get the projection plan of the hall
-	void displayProjectionCalendar() const; // Display the hall's projection plan
+	void displayProjectionCalendar(); // Display the hall's projection plan
 	int getHallID() const; // Get the ID of the hall
 	size_t numberOfProjections() const; // Get the number of projections in the hall
+	void changeID(int newID); // Change the ID of the hall to value newID
 
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<Hall> loadFromFile(std::istream& is);
@@ -86,7 +88,8 @@ public:
 	std::vector<Hall>& getHallsVector(); // Get the halls in the cinema
 	size_t numberOfHalls() const; // Get the number of halls in the cinema
 	void displayHallsID() const; // Display all halls in the cinema
-	void displayMovies() const; // Display all movies in the cinema
+	void displayMovies(); // Display all movies in the cinema
+	void recalibrateHallIDs(); // Recalibrate hall IDs after deletion or addition
 
 	bool saveToFile(std::ostream& os) const;
 	static std::optional<Cinema> loadFromFile(std::istream& is);

@@ -1,5 +1,6 @@
 #include <chrono>
 #include "cinemaObjects.h"
+#include <algorithm>
 #include <iostream>
 #include "definitions.h"
 #include "../system_static_library/namespaceUtility.h"
@@ -64,7 +65,7 @@ std::optional<Movie> Movie::loadFromFile(std::istream& is)
 }
 
 // MovieProjection class implementation
-MovieProjection::MovieProjection(const Movie movie, int startingTime):
+MovieProjection::MovieProjection(const Movie movie, int startingTime) :
 	m_projectionMovie(movie), m_startingTime(startingTime)
 {
 	int tempTime = startingTime;
@@ -298,9 +299,19 @@ bool Hall::addProjection(MovieProjection& movieProjection)
 	return true;
 }
 
-void Hall::displayProjectionCalendar() const
+void Hall::sortProjectionsByTime()
 {
-	std::cout << '\n';
+	std::ranges::sort(m_projectionPlan, [](const MovieProjection& a, const MovieProjection& b)
+		{
+			return a.getProjectionTime() < b.getProjectionTime();
+		}
+	);
+}
+
+
+void Hall::displayProjectionCalendar()
+{
+	sortProjectionsByTime();
 	for (size_t temp = 0; temp < m_projectionPlan.size(); temp++)
 	{
 		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
@@ -308,6 +319,7 @@ void Hall::displayProjectionCalendar() const
 		std::cout << "Release Date: " << m_projectionPlan.at(temp).getProjectionMovieReleaseDate() << '\n';
 		std::cout << "Language: " << m_projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';
 		std::cout << "Projection Time: " << m_projectionPlan.at(temp).getProjectionTime() << ":00" << '\n';
+		std::cout << '\n';
 	}
 }
 
@@ -324,6 +336,11 @@ int Hall::getHallID() const
 size_t Hall::numberOfProjections() const
 {
 	return m_projectionPlan.size();
+}
+
+void Hall::changeID(int newID)
+{
+	this->m_ID = newID;
 }
 
 bool Hall::saveToFile(std::ostream& os) const
@@ -404,14 +421,22 @@ size_t Cinema::numberOfHalls() const
 	return m_halls.size();
 }
 
-void Cinema::displayMovies() const
+void Cinema::displayMovies()
 {
-	for (const auto& hall : m_halls)
+	for (auto& hall : m_halls)
 	{
 		std::cout << "Hall ID: " << hall.getHallID() << '\n';
 		hall.displayProjectionCalendar();
 		std::cout << '\n';
 		std::cout << '\n';
+	}
+}
+
+void Cinema::recalibrateHallIDs()
+{
+	for (size_t temp = 0; temp < m_halls.size(); ++temp)
+	{
+		m_halls.at(temp).changeID(static_cast<int>(temp + 1)); // Adjust hall ID to be 1-based index
 	}
 }
 
