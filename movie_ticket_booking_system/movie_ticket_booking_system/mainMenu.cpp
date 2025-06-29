@@ -65,13 +65,15 @@ void mainMenu()
 	}
 }
 
-void displayAllMoviesInDirectory() {
+void displayAllMoviesInDirectory()
+{
 	namespace fs = std::filesystem;
 	std::string dirPath = "../assets/objectData/movieObjects/";
 
 	for (const auto& entry : fs::directory_iterator(dirPath))
 	{
-		if (entry.is_regular_file() && entry.path().extension() == ".bin") {
+		if (entry.is_regular_file() && entry.path().extension() == ".bin")
+		{
 			std::ifstream inFile(entry.path(), std::ios::binary);
 			if (!inFile) continue;
 			auto movieOpt = Movie::loadFromFile(inFile);

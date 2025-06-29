@@ -9,7 +9,7 @@
 #include <filesystem>
 
 //Cities vector create and save functions
-void createNewCity()
+/*void createNewCity()
 {
 	utility::displayTitleGraphic("../assets/titleGraphics/addObject/createCityTitleGraphic.txt");
 
@@ -29,7 +29,7 @@ void createNewCity()
 	}
 	saveCitiesToFile(cities);
 	std::this_thread::sleep_for(std::chrono::seconds(3));
-}
+}*/
 
 bool saveCitiesToFile(const std::vector<City>& cities)
 {
@@ -365,4 +365,12 @@ void addNewMovie()
 		std::cout << "Movie creation cancelled." << '\n';
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 	}
+}
+
+// Account save function
+bool saveAccountToFile(const Account& account) {
+	std::string filePath = "../assets/objectData/accountObjects/" + account.getUsername() + ".bin";
+	std::ofstream outFile(filePath, std::ios::binary);
+	if (!outFile) return false;
+	return account.saveToFile(outFile);
 }

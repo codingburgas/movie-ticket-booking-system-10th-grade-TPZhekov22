@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include "cinemaObjects.h"
+#include "accountObject.h"
 
 //Cities vector create and save functions
-void createNewCity();
+//void createNewCity();
 bool saveCitiesToFile(const std::vector<City>& cities);
 
 //Cinema create and save function
@@ -18,3 +19,6 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 
 //Movie create and save function
 void addNewMovie();
+
+//Account save function
+bool saveAccountToFile(const Account& account);

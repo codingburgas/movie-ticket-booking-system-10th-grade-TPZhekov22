@@ -130,7 +130,8 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 			utility::clearScreen();
 			return;
 		}
-		if (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections() + 1)
+		if (selectedProjectionOption < MIN_MENU_CHOICES || selectedProjectionOption > currentHall.numberOfProjections()
+			+ 1)
 		{
 			std::cout << "Invalid option" << '\n';
 			std::cin.clear();
@@ -141,7 +142,8 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		else
 		{
 			utility::clearScreen();
-			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema, currentCity);
+			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema,
+			               currentCity);
 		}
 	}
 	while (utility::exit == false);

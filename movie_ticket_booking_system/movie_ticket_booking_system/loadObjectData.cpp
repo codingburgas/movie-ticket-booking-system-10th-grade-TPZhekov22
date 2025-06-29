@@ -2,6 +2,8 @@
 #include "cinemaObjects.h"
 #include "loadObjectData.h"
 #include <iostream>
+#include <optional>
+#include "accountObject.h"
 
 // Cities vector loading function
 std::vector<City> loadCitiesFromFile()
@@ -57,4 +59,12 @@ Movie loadMoviesFromFile(std::string& movieName)
 	}
 	inFile.close();
 	return *movieOpt;
+}
+
+std::optional<Account> loadAccountFromFile(const std::string& username)
+{
+	std::string filePath = "../assets/objectData/accountObjects/" + username + ".bin";
+	std::ifstream inFile(filePath, std::ios::binary);
+	if (!inFile) return std::nullopt;
+	return Account::loadFromFile(inFile);
 }
