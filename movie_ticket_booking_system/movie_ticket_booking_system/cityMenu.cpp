@@ -5,6 +5,7 @@
 #include "createNewObjects.h"
 #include "menus.h"
 #include "selectPlace.h"
+#include "deleteObjects.h"
 
 void cityMenu(City& currentCity)
 {
@@ -17,7 +18,8 @@ void cityMenu(City& currentCity)
 		std::cout << "---------------------------------------" << '\n';
 		std::cout << "1: Select a cinema" << '\n';
 		std::cout << "2: Create new cinema" << '\n';
-		std::cout << "3: Go back" << '\n';
+		std::cout << "3: Delete cinema" << '\n';
+		std::cout << "4: Go back" << '\n';
 
 		int selectedCinemaOption;
 		std::cin >> selectedCinemaOption;
@@ -37,9 +39,14 @@ void cityMenu(City& currentCity)
 
 			break;
 		case 3:
+			deleteCinema(currentCity);
 			utility::clearScreen();
 
+			break;
+		case 4:
+			utility::clearScreen();
 			return;
+
 			break;
 		default:
 			std::cout << "Invalid option" << '\n';
@@ -49,6 +56,5 @@ void cityMenu(City& currentCity)
 			utility::clearScreen();
 			break;
 		}
-	}
-	while (utility::exit == false);
+	} while (utility::exit == false);
 }

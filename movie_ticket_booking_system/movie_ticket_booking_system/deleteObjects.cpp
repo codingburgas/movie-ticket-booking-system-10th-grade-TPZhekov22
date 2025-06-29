@@ -8,6 +8,56 @@
 #include "loadObjectData.h"
 #include "../system_static_library/namespaceUtility.h"
 
+// Cinema deletion function
+void deleteCinema(City& currentCity)
+{
+	std::cout << '\n';
+	std::cout << "Select which cinema you want to delete from this city or cancel by typing '12345': ";
+	int selectedCinema;
+	std::cin >> selectedCinema;
+	auto& cinemas = currentCity.getCinemasVector();
+	if (selectedCinema == 12345)
+	{
+		std::cout << "Cinema deletion cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+	selectedCinema = selectedCinema - 1; // Adjust for zero-based index
+	if (selectedCinema < 0 || static_cast<size_t>(selectedCinema) >= cinemas.size())
+	{
+		std::cerr << "Invalid cinema index.\n";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+	std::cout << "WARNING: THIS ACTION WILL DELETE THE CINEMA '" << cinemas.at(selectedCinema).getCinemaName()
+		<< "' FROM THE DATA FILES AND ALL THE HALLS AND MOVIE PROJECTIONS IN THIS CINEMA!!!" << '\n';
+	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?" << '\n';
+	std::cout << "Confirm deletion of the cinema '" << cinemas.at(selectedCinema).getCinemaName() << "'? (y/n): ";
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	char confirm;
+	std::cin >> confirm;
+	if (confirm != 'y' && confirm != 'Y')
+	{
+		std::cout << "Cinema deletion cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return;
+	}
+	cinemas.erase(cinemas.begin() + selectedCinema);
+	if (saveCitiesToFile(loadCitiesFromFile()))
+	{
+		std::cout << "Cinema deleted successfully.\n";
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+	}
+	else
+	{
+		std::cerr << "Error: Failed to save changes.\n";
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+	}
+}
+
 // Hall deletion function
 void deleteHall(Cinema& currentCinema, City& currentCity)
 {
