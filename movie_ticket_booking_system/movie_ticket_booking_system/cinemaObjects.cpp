@@ -6,7 +6,8 @@
 #include "../system_static_library/namespaceUtility.h"
 
 // Movie class implementation
-Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate, const std::string& movieLanguage)
+Movie::Movie(const std::string& movieTitle, const std::string& movieGenre, const std::chrono::year_month_day& movieDate,
+             const std::string& movieLanguage)
 	: m_title(movieTitle), m_genre(movieGenre), m_releaseDate(movieDate), m_language(movieLanguage)
 {
 }
@@ -301,9 +302,9 @@ bool Hall::addProjection(MovieProjection& movieProjection)
 void Hall::sortProjectionsByTime()
 {
 	std::ranges::sort(m_projectionPlan, [](const MovieProjection& a, const MovieProjection& b)
-		{
-			return a.getProjectionTime() < b.getProjectionTime();
-		}
+	                  {
+		                  return a.getProjectionTime() < b.getProjectionTime();
+	                  }
 	);
 }
 
@@ -313,7 +314,8 @@ void Hall::displayProjectionCalendar()
 	sortProjectionsByTime();
 	for (size_t temp = 0; temp < m_projectionPlan.size(); temp++)
 	{
-		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() << '\n';
+		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() <<
+			'\n';
 		std::cout << "Genre: " << m_projectionPlan.at(temp).getProjectionMovieGenre() << '\n';
 		std::cout << "Release Date: " << m_projectionPlan.at(temp).getProjectionMovieReleaseDate() << '\n';
 		std::cout << "Language: " << m_projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';

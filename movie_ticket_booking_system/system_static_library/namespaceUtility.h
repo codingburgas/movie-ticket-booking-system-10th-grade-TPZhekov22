@@ -51,8 +51,12 @@ namespace utility
 	bool vectorLinearSearchRow2D(std::vector<std::vector<int>>& vec, int specificRow, int value);
 
 	bool removeFrom2DVectorRow(std::vector<std::vector<int>>& vec, int rowIndex, int value);
-
 	bool is2DVectorEmpty(std::vector<std::vector<int>>& vec);
 
 	void listAvailableMovies();
+	void listAvailableAccounts();
+
+	bool doesFileNameExists(const std::string& username, const std::string& dirPath);
+
+	bool isValidPassword(const std::string& password);
 }

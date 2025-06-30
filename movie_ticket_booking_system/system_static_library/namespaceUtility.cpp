@@ -6,9 +6,11 @@
 #include <ranges>
 #include <algorithm>
 #include <filesystem>
+#include <cctype>
 
 namespace utility
 {
+#define MIN_PASSWORD_LENGTH 8
 	//StructScene scene;
 	bool exit = false;
 
@@ -17,7 +19,7 @@ namespace utility
 #if defined(_WIN32) || defined(_WIN64)
 		std::system("cls");
 #else
-        std::system("clear");
+		std::system("clear");
 #endif
 	}
 
@@ -139,5 +141,53 @@ namespace utility
 				std::cout << "- " << entry.path().stem().string() << '\n';
 			}
 		}
+	}
+
+	void listAvailableAccounts()
+	{
+		for (const auto& entry : std::filesystem::directory_iterator("../assets/objectData/accountObjects/"))
+		{
+			if (entry.path().extension() == ".bin")
+			{
+				std::cout << "- " << entry.path().stem().string() << '\n';
+			}
+		}
+	}
+
+	bool doesFileNameExists(const std::string& username, const std::string& dirPath)
+	{
+		for (const auto& entry : std::filesystem::directory_iterator(dirPath))
+		{
+			if (entry.is_regular_file())
+			{
+				std::string filename = entry.path().filename().string();
+				if (filename.size() > 4 && filename.substr(filename.size() - 4) == ".bin")
+				{
+					std::string nameOnly = filename.substr(0, filename.size() - 4);
+					if (nameOnly == username)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	bool isValidPassword(const std::string& password)
+	{
+		if (password.length() < MIN_PASSWORD_LENGTH) return false;
+
+		bool hasLetter = false;
+		bool hasDigit = false;
+		bool hasSpecial = false;
+
+		for (const char ch : password)
+		{
+			if (std::isalpha(static_cast<unsigned char>(ch))) hasLetter = true;
+			else if (std::isdigit(static_cast<unsigned char>(ch))) hasDigit = true;
+			else hasSpecial = true;
+		}
+		return hasLetter && hasDigit && hasSpecial;
 	}
 }

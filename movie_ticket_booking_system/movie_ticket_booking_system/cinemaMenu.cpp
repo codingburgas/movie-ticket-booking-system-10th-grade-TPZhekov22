@@ -7,7 +7,7 @@
 #include "selectPlace.h"
 #include "../system_static_library/namespaceUtility.h"
 
-void cinemaMenu(Cinema& currentCinema, City& currentCity)
+void cinemaMenu(Account& currentAccount, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
@@ -28,7 +28,7 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 		{
 		case 1:
 			utility::clearScreen();
-			selectHall(currentCinema, currentCity);
+			selectHall(currentAccount, currentCinema, currentCity);
 
 			break;
 
@@ -56,5 +56,6 @@ void cinemaMenu(Cinema& currentCinema, City& currentCity)
 			utility::clearScreen();
 			break;
 		}
-	} while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

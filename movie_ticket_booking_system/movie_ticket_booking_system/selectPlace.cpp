@@ -9,7 +9,7 @@
 #include "menus.h"
 #include "../system_static_library/namespaceUtility.h"
 
-void selectCity()
+void selectCity(Account& currentAccount)
 {
 	std::vector<City> cities = loadCitiesFromFile();
 	do
@@ -39,13 +39,13 @@ void selectCity()
 			return;
 		}
 		utility::clearScreen();
-		cityMenu(cities.at(selectedCityOption - 1));
+		cityMenu(currentAccount, cities.at(selectedCityOption - 1));
 	}
 	while (utility::exit == false);
 	saveCitiesToFile(cities);
 }
 
-void selectCinema(City& currentCity)
+void selectCinema(Account& currentAccount, City& currentCity)
 {
 	do
 	{
@@ -74,12 +74,12 @@ void selectCinema(City& currentCity)
 			return;
 		}
 		utility::clearScreen();
-		cinemaMenu(currentCity.getCinemasVector().at(selectedCinemaOption - 1), currentCity);
+		cinemaMenu(currentAccount, currentCity.getCinemasVector().at(selectedCinemaOption - 1), currentCity);
 	}
 	while (utility::exit == false);
 }
 
-void selectHall(Cinema& currentCinema, City& currentCity)
+void selectHall(Account& currentAccount, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
@@ -107,12 +107,12 @@ void selectHall(Cinema& currentCinema, City& currentCity)
 			return;
 		}
 		utility::clearScreen();
-		hallMenu(currentCinema.getHallsVector().at(selectedHallOption - 1), currentCinema, currentCity);
+		hallMenu(currentAccount, currentCinema.getHallsVector().at(selectedHallOption - 1), currentCinema, currentCity);
 	}
 	while (utility::exit == false);
 }
 
-void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
+void selectMovieProjection(Account& currentAccount, Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{
@@ -142,7 +142,8 @@ void selectMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		else
 		{
 			utility::clearScreen();
-			projectionMenu(currentHall.getProjectionPlan().at(selectedProjectionOption - 1), currentHall, currentCinema,
+			projectionMenu(currentAccount, currentHall.getProjectionPlan().at(selectedProjectionOption - 1),
+			               currentHall, currentCinema,
 			               currentCity);
 		}
 	}

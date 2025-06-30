@@ -3,7 +3,9 @@
 #include "loadObjectData.h"
 #include <iostream>
 #include <optional>
+#include <thread>
 #include "accountObject.h"
+#include "../system_static_library/namespaceUtility.h"
 
 // Cities vector loading function
 std::vector<City> loadCitiesFromFile()
@@ -61,10 +63,74 @@ Movie loadMoviesFromFile(std::string& movieName)
 	return *movieOpt;
 }
 
+// Account login and loading function
 std::optional<Account> loadAccountFromFile(const std::string& username)
 {
 	std::string filePath = "../assets/objectData/accountObjects/" + username + ".bin";
 	std::ifstream inFile(filePath, std::ios::binary);
 	if (!inFile) return std::nullopt;
 	return Account::loadFromFile(inFile);
+}
+
+Account logInAccount()
+{
+	std::string username;
+	std::string password;
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	do
+	{
+		std::cout << '\n';
+		std::cout << "Enter your username or cancel by typing 'EXIT BACK': ";
+		std::getline(std::cin, username);
+		if (username.empty())
+		{
+			std::cout << "Username cannot be empty." << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		}
+		else
+		{
+			if (username == "EXIT BACK")
+			{
+				std::cout << "Login cancelled." << '\n';
+				std::this_thread::sleep_for(std::chrono::seconds(2));
+				return {};
+			}
+			if (!utility::doesFileNameExists(username, "../assets/objectData/accountObjects/"))
+			{
+				std::cout << "Error: Account with username '" << username << "' does not exist." << '\n';
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			}
+		}
+	}
+	while (username.empty() || !utility::doesFileNameExists(username, "../assets/objectData/accountObjects/"));
+
+	auto accountOpt = loadAccountFromFile(username);
+	Account account = *accountOpt;
+
+	do
+	{
+		std::cout << '\n';
+		std::cout << "Enter your password or cancel by typing 'EXIT BACK': ";
+		std::getline(std::cin, password);
+		if (password == "EXIT BACK")
+		{
+			std::cout << "Login cancelled." << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			return {};
+		}
+		if (account.getPassword() != password)
+		{
+			std::cout << "Error: Incorrect password." << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		}
+	}
+	while (account.getPassword() != password);
+	return account;
 }

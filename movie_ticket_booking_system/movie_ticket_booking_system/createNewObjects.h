@@ -20,5 +20,6 @@ void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& cu
 //Movie create and save function
 void addNewMovie();
 
-//Account save function
+//Account create save function
 bool saveAccountToFile(const Account& account);
+void createNewAccount();

@@ -167,7 +167,8 @@ void createNewHall(Cinema& currentCinema, City& currentCity)
 }
 
 // Movie Projection create and save functions
-void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity, MovieProjection& updatedProjection)
+void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity,
+                         MovieProjection& updatedProjection)
 {
 	for (auto& projection : currentHall.getProjectionPlan())
 	{
@@ -218,76 +219,77 @@ void saveMovieProjection(Hall& currentHall, Cinema& currentCinema, City& current
 void createNewMovieProjection(Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	utility::displayTitleGraphic("../assets/titleGraphics/createObjectGraphics/createMovieProjectionTitleGraphic.txt");
-   std::string movieName;
+	std::string movieName;
 
-   std::cout << "Available movies:\n";
-   utility::listAvailableMovies();
-   std::cout << '\n';
-   std::cout << "Enter the name of the movie you want to make a projection for or cancel by typing 'CANCEL MOVIE' : ";
+	std::cout << "Available movies:\n";
+	utility::listAvailableMovies();
+	std::cout << '\n';
+	std::cout << "Enter the name of the movie you want to make a projection for or cancel by typing 'CANCEL MOVIE' : ";
 
-   do
-   {
-	   std::cin.clear();
-	   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-       std::getline(std::cin, movieName);
-       if (movieName == "CANCEL MOVIE")
-       {
-           std::cout << "Movie projection creation cancelled." << '\n';
-           std::this_thread::sleep_for(std::chrono::seconds(3));
-           return;
-       }
-       if (movieName.empty() || !utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"))
-       {
-		   std::cin.clear();
-		   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-           std::cerr << "Error: Movie name is empty or it does not exist." << '\n';
-		   std::cout << "Please enter a valid movie name or type 'CANCEL MOVIE' to cancel: ";
+	do
+	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::getline(std::cin, movieName);
+		if (movieName == "CANCEL MOVIE")
+		{
+			std::cout << "Movie projection creation cancelled." << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(3));
+			return;
+		}
+		if (movieName.empty() || !utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"))
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cerr << "Error: Movie name is empty or it does not exist." << '\n';
+			std::cout << "Please enter a valid movie name or type 'CANCEL MOVIE' to cancel: ";
+		}
+	}
+	while (!utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"));
 
-       }
-   } while (!utility::fileExists("../assets/objectData/movieObjects/" + movieName + ".bin"));
-
-   int startingTime;
-   std::cout << "Enter the starting time of the movie projection (0-23): ";
+	int startingTime;
+	std::cout << "Enter the starting time of the movie projection (0-23): ";
 	std::cin.clear();
-   do
-   {
-       std::cin >> startingTime;
-       if (std::cin.fail() || startingTime < 0 || startingTime > 23)
-       {
-           std::cerr << "Error: Invalid input. Please enter a valid starting time (0-23): ";
-		   std::cin.clear();
-		   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-       }
-   } while (std::cin.fail() || startingTime < 0 || startingTime > 23);
+	do
+	{
+		std::cin >> startingTime;
+		if (std::cin.fail() || startingTime < 0 || startingTime > 23)
+		{
+			std::cerr << "Error: Invalid input. Please enter a valid starting time (0-23): ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+	while (std::cin.fail() || startingTime < 0 || startingTime > 23);
 
-   for (const auto& projection : currentHall.getProjectionPlan())
-   {
-       if (projection.getProjectionTime() == startingTime)
-       {
-           std::cerr << "Error: A movie projection already exists at this starting time in the hall." << '\n';
-           std::this_thread::sleep_for(std::chrono::seconds(3));
-           return;
-       }
-   }
+	for (const auto& projection : currentHall.getProjectionPlan())
+	{
+		if (projection.getProjectionTime() == startingTime)
+		{
+			std::cerr << "Error: A movie projection already exists at this starting time in the hall." << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(3));
+			return;
+		}
+	}
 
-   Movie newMovie = loadMoviesFromFile(movieName);
-   MovieProjection newProjection(newMovie, startingTime);
-   std::cout << "New Movie Projection Created in hall " << currentHall.getHallID() << ": " << '\n';
-   std::cout << "Movie Name: " << newProjection.getProjectionMovieTitle() << '\n';
-   std::cout << "Starting Time: " << newProjection.getProjectionTime() << ":00" << '\n';
-   std::cout << "Confirm creation of the movie projection? (y/n): ";
-   char confirm;
-   std::cin >> confirm;
-   if (confirm == 'y' || confirm == 'Y')
-   {
-       currentHall.addProjection(newProjection);
-       saveMovieProjection(currentHall, currentCinema, currentCity, newProjection);
-   }
-   else
-   {
-       std::cout << "Movie projection creation cancelled." << '\n';
-       std::this_thread::sleep_for(std::chrono::seconds(3));
-   }
+	Movie newMovie = loadMoviesFromFile(movieName);
+	MovieProjection newProjection(newMovie, startingTime);
+	std::cout << "New Movie Projection Created in hall " << currentHall.getHallID() << ": " << '\n';
+	std::cout << "Movie Name: " << newProjection.getProjectionMovieTitle() << '\n';
+	std::cout << "Starting Time: " << newProjection.getProjectionTime() << ":00" << '\n';
+	std::cout << "Confirm creation of the movie projection? (y/n): ";
+	char confirm;
+	std::cin >> confirm;
+	if (confirm == 'y' || confirm == 'Y')
+	{
+		currentHall.addProjection(newProjection);
+		saveMovieProjection(currentHall, currentCinema, currentCity, newProjection);
+	}
+	else
+	{
+		std::cout << "Movie projection creation cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+	}
 }
 
 //Movie create and save function
@@ -367,10 +369,105 @@ void addNewMovie()
 	}
 }
 
-// Account save function
-bool saveAccountToFile(const Account& account) {
+// Account create and save function
+bool saveAccountToFile(const Account& account)
+{
 	std::string filePath = "../assets/objectData/accountObjects/" + account.getUsername() + ".bin";
 	std::ofstream outFile(filePath, std::ios::binary);
 	if (!outFile) return false;
 	return account.saveToFile(outFile);
+}
+
+void createNewAccount()
+{
+	utility::displayTitleGraphic("../assets/titleGraphics/createObjectGraphics/createAccountTitleGraphic.txt");
+	std::string username;
+	std::string password;
+	std::string confirmPassword;
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	do
+	{
+		std::cout << "Enter a username or exit by typing 'EXIT BACK': ";
+		getline(std::cin, username);
+		if (username.empty())
+		{
+			std::cout << "Username cannot be empty." << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << '\n';
+		}
+		else
+		{
+			if (username == "EXIT BACK")
+			{
+				std::cout << "Account creation cancelled." << '\n';
+				std::this_thread::sleep_for(std::chrono::seconds(2));
+				return;
+			}
+			if (utility::doesFileNameExists(username, "../assets/objectData/accountObjects/"))
+			{
+				std::cout << "Username already exists. Please choose a different username." << '\n';
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << '\n';
+			}
+		}
+	}
+	while (username.empty() || utility::doesFileNameExists(username, "../assets/objectData/accountObjects/"));
+	std::cout << '\n';
+	do
+	{
+		std::cout << "Enter a password or exit by typing 'EXIT BACK': ";
+		getline(std::cin, password);
+		if (password == "EXIT BACK")
+		{
+			std::cout << "Account creation cancelled." << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			return;
+		}
+		std::cout << "Confirm password: ";
+		getline(std::cin, confirmPassword);
+		if (!utility::isValidPassword(password))
+		{
+			std::cout <<
+				"Password must be at least 8 characters long, contain at least one letter, one digit, and one special character."
+				<< '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << '\n';
+		}
+		else if (password != confirmPassword)
+		{
+			std::cout << "Passwords do not match. Please try again." << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << '\n';
+		}
+	}
+	while (!utility::isValidPassword(password) || password != confirmPassword);
+	std::cout << '\n';
+
+	std::cout << "Confirm account creation? (y/n): ";
+	char confirm;
+	std::cin >> confirm;
+	if (confirm == 'y' || confirm == 'Y')
+	{
+		Account newAccount(username, password);
+		if (saveAccountToFile(newAccount))
+		{
+			std::cout << "Account created successfully!" << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+		}
+		else
+		{
+			std::cerr << "Error: Account could not be saved to a file." << '\n';
+			std::this_thread::sleep_for(std::chrono::seconds(4));
+		}
+	}
+	else
+	{
+		std::cout << "Account creation cancelled." << '\n';
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+	}
 }

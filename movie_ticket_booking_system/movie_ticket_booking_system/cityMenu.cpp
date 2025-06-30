@@ -7,7 +7,7 @@
 #include "selectPlace.h"
 #include "deleteObjects.h"
 
-void cityMenu(City& currentCity)
+void cityMenu(Account& currentAccount, City& currentCity)
 {
 	do
 	{
@@ -29,7 +29,7 @@ void cityMenu(City& currentCity)
 		case 1:
 			utility::clearScreen();
 
-			selectCinema(currentCity);
+			selectCinema(currentAccount, currentCity);
 			break;
 
 		case 2:
@@ -56,5 +56,6 @@ void cityMenu(City& currentCity)
 			utility::clearScreen();
 			break;
 		}
-	} while (utility::exit == false);
+	}
+	while (utility::exit == false);
 }

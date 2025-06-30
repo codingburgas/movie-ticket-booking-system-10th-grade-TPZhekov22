@@ -157,7 +157,7 @@ void deleteMovieProjection(Hall& currentHall, Cinema& currentCinema, City& curre
 		<< "' FROM THE DATA FILES AND ALL THE TICKETS BOOKED FOR THIS PROJECTION!!!" << '\n';
 	std::cout << "ARE YOU ABSOLUTELY CERTAIN YOU WANT TO CONTINUE WITH THIS ACTION?" << '\n';
 	std::cout << "Confirm deletion of the movie projection '" << projections.at(selectedProjection).
-		getProjectionMovieTitle() << "'? (y/n): ";
+	                                                                         getProjectionMovieTitle() << "'? (y/n): ";
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	char confirm;
@@ -238,7 +238,8 @@ void removeMovie()
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-	} while (!utility::isValidDate(year, month, day));
+	}
+	while (!utility::isValidDate(year, month, day));
 
 	std::chrono::year_month_day movieReleaseDate{
 		std::chrono::year{year},
@@ -303,9 +304,9 @@ void removeMovie()
 			{
 				auto& projections = hall.getProjectionPlan();
 				std::erase_if(projections, [&movieTitle](const MovieProjection& projection)
-					{
-						return projection.getProjectionMovieTitle() == movieTitle;
-					});
+				{
+					return projection.getProjectionMovieTitle() == movieTitle;
+				});
 			}
 		}
 	}

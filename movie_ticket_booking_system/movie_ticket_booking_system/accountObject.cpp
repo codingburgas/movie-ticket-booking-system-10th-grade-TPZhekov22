@@ -1,7 +1,12 @@
 #include "accountObject.h"
 #include "../system_static_library/namespaceUtility.h"
 
-Account::Account(const std::string& username, const std::string& password): m_username(username), m_password(password)
+Account::Account() : m_username("guest"), m_password("guest")
+{
+	m_isAdmin = false;
+}
+
+Account::Account(const std::string& username, const std::string& password) : m_username(username), m_password(password)
 {
 }
 
@@ -20,11 +25,16 @@ const bool& Account::getIsAdmin() const
 	return m_isAdmin;
 }
 
+void Account::setAdmin(bool adminStatus)
+{
+	this->m_isAdmin = adminStatus;
+}
+
 bool Account::saveToFile(std::ostream& os) const
 {
 	if (!utility::writeString(os, getUsername())) return false;
 	if (!utility::writeString(os, getPassword())) return false;
-	bool admin = m_isAdmin();
+	bool admin = m_isAdmin;
 	os.write(reinterpret_cast<const char*>(&admin), sizeof(admin));
 	return os.good();
 }

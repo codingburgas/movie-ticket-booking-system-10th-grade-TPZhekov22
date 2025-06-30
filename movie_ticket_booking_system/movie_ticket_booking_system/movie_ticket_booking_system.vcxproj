@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="accountSignIn.cpp" />
     <ClCompile Include="accountObject.cpp" />
     <ClCompile Include="cinemaMenu.cpp" />
     <ClCompile Include="cityMenu.cpp" />
@@ -152,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="accountSignIn.h" />
     <ClInclude Include="accountObject.h" />
     <ClInclude Include="deleteObjects.h" />
     <ClInclude Include="optionsProjectionMenu.h" />
