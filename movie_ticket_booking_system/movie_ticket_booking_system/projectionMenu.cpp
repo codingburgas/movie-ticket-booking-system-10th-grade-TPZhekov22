@@ -8,8 +8,7 @@
 #include <chrono>
 #include "optionsProjectionMenu.h"
 
-void projectionMenu(Account& currentAccount, MovieProjection& currentMovieProjection, Hall& currentHall,
-                    Cinema& currentCinema, City& currentCity)
+void projectionMenu(Account& currentAccount, MovieProjection& currentMovieProjection, Hall& currentHall, Cinema& currentCinema, City& currentCity)
 {
 	do
 	{

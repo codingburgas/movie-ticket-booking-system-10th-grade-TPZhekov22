@@ -314,12 +314,12 @@ void Hall::displayProjectionCalendar()
 	sortProjectionsByTime();
 	for (size_t temp = 0; temp < m_projectionPlan.size(); temp++)
 	{
-		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() <<
-			'\n';
+		std::cout << "#" << temp + 1 << " Movie projection: " << m_projectionPlan.at(temp).getProjectionMovieTitle() <<'\n';
 		std::cout << "Genre: " << m_projectionPlan.at(temp).getProjectionMovieGenre() << '\n';
 		std::cout << "Release Date: " << m_projectionPlan.at(temp).getProjectionMovieReleaseDate() << '\n';
 		std::cout << "Language: " << m_projectionPlan.at(temp).getProjectionMovieLanguage() << '\n';
 		std::cout << "Projection Time: " << m_projectionPlan.at(temp).getProjectionTime() << ":00" << '\n';
+		std::cout << '\n';
 		std::cout << '\n';
 	}
 }
@@ -426,9 +426,10 @@ void Cinema::displayMovies()
 {
 	for (auto& hall : m_halls)
 	{
+		std::cout << "-----------------------------------------------" << '\n';
 		std::cout << "Hall ID: " << hall.getHallID() << '\n';
-		hall.displayProjectionCalendar();
 		std::cout << '\n';
+		hall.displayProjectionCalendar();
 		std::cout << '\n';
 	}
 }

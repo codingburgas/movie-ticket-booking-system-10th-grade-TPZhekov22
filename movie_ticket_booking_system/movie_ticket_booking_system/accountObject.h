@@ -6,7 +6,7 @@ class Account
 {
 	std::string m_username;
 	std::string m_password;
-	bool m_isAdmin = false; //CHANGE LATER TO FALSE
+	bool m_isAdmin = false;
 
 public:
 	Account();

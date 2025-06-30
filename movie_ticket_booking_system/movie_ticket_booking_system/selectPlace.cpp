@@ -125,9 +125,9 @@ void selectMovieProjection(Account& currentAccount, Hall& currentHall, Cinema& c
 	{
 		utility::displayTitleGraphic("../assets/titleGraphics/selectPlaceGraphics/selectProjectionTitleGraphic.txt");
 		std::cout << "Hall ID: " << currentHall.getHallID() << '\n';
+		std::cout << '\n';
 		currentHall.displayProjectionCalendar();
 		std::cout << currentHall.numberOfProjections() + 1 << ": Go back" << '\n';
-		std::cout << "---------------------------------------" << '\n';
 
 		size_t selectedProjectionOption;
 		std::cin >> selectedProjectionOption;
