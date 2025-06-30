@@ -20,7 +20,14 @@ void selectCity(Account& currentAccount)
 		{
 			std::cout << numOfCity + 1 << ": " << cities[numOfCity].getCityName() << '\n';
 		}
-		std::cout << cities.size() + 1 << ": Go back" << '\n';
+		if (currentAccount.getIsAdmin() == true)
+		{
+			std::cout << cities.size() + 1 << ": Go back" << '\n';
+		}
+		else
+		{
+			std::cout << cities.size() + 1 << ": Exit to desktop" << '\n';
+		}
 		size_t selectedCityOption;
 		do
 		{
@@ -143,8 +150,7 @@ void selectMovieProjection(Account& currentAccount, Hall& currentHall, Cinema& c
 		{
 			utility::clearScreen();
 			projectionMenu(currentAccount, currentHall.getProjectionPlan().at(selectedProjectionOption - 1),
-			               currentHall, currentCinema,
-			               currentCity);
+			               currentHall, currentCinema, currentCity);
 		}
 	}
 	while (utility::exit == false);

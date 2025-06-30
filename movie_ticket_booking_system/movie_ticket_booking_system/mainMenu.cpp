@@ -12,64 +12,76 @@
 
 void mainMenu(Account& currentAccount)
 {
-	while (utility::exit != true)
+	if (currentAccount.getIsAdmin() == false)
 	{
-		utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/mainMenuTitleGraphic.txt");
-
-		std::cout << "1: Select City" << '\n';
-		std::cout << "2: Add new movie" << '\n';
-		std::cout << "3: Remove movie" << '\n';
-		std::cout << "4: Display all available movies" << '\n';
-		std::cout << "5: Manage admins" << '\n';
-		std::cout << "6: Exit to Desktop" << '\n';
-
-		int mainMenuOption;
-		std::cin >> mainMenuOption;
-
-		switch (mainMenuOption)
+		utility::clearScreen();
+		selectCity(currentAccount);
+		utility::clearScreen();
+		std::cout << "Exiting..." << '\n';
+		utility::exit = true;
+		return;
+	}
+	else
+	{
+		while (utility::exit != true)
 		{
-		case 1:
-			utility::clearScreen();
-			selectCity(currentAccount);
-			break;
+			utility::displayTitleGraphic("../assets/titleGraphics/menuGraphics/mainMenuTitleGraphic.txt");
 
-		case 2:
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			utility::clearScreen();
-			addNewMovie();
-			utility::clearScreen();
+			std::cout << "1: Select City" << '\n';
+			std::cout << "2: Add new movie" << '\n';
+			std::cout << "3: Remove movie" << '\n';
+			std::cout << "4: Display all available movies" << '\n';
+			std::cout << "5: Manage admins" << '\n';
+			std::cout << "6: Exit to Desktop" << '\n';
 
-			break;
-		case 3:
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			utility::clearScreen();
-			removeMovie();
-			utility::clearScreen();
-			break;
-		case 4:
-			std::cout << '\n';
-			displayAllMoviesInDirectory();
-			utility::clearScreen();
-			break;
-		case 5:
-			utility::clearScreen();
-			manageAdmins();
+			int mainMenuOption;
+			std::cin >> mainMenuOption;
 
-			break;
-		case 6:
-			utility::clearScreen();
-			std::cout << "Exiting..." << '\n';
-			utility::exit = true;
-			break;
-		default:
-			std::cout << "Invalid option" << '\n';
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::this_thread::sleep_for(std::chrono::milliseconds(650));
-			utility::clearScreen();
-			break;
+			switch (mainMenuOption)
+			{
+			case 1:
+				utility::clearScreen();
+				selectCity(currentAccount);
+				break;
+
+			case 2:
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				utility::clearScreen();
+				addNewMovie();
+				utility::clearScreen();
+
+				break;
+			case 3:
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				utility::clearScreen();
+				removeMovie();
+				utility::clearScreen();
+				break;
+			case 4:
+				std::cout << '\n';
+				displayAllMoviesInDirectory();
+				utility::clearScreen();
+				break;
+			case 5:
+				utility::clearScreen();
+				manageAdmins();
+
+				break;
+			case 6:
+				utility::clearScreen();
+				std::cout << "Exiting..." << '\n';
+				utility::exit = true;
+				break;
+			default:
+				std::cout << "Invalid option" << '\n';
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::this_thread::sleep_for(std::chrono::milliseconds(650));
+				utility::clearScreen();
+				break;
+			}
 		}
 	}
 }
